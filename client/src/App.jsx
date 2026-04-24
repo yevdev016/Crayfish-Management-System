@@ -1,12 +1,9 @@
 import Header from './components/common/Header'
 import LandingPage from './pages/LandingPage'
-import {Routes, Route} from 'react-router-dom'
+import AppRoute from './routes/AppRoutes'
 function App() {
-
   return (
-    <>
-     <LandingPage />
-    </>
+    <AppRoute />
   )
 }
 

@@ -1,15 +1,16 @@
-import './Header.css'
-import logo from '@/assets/LOGO-CRAYFISH.png'
+import { Link } from 'react-router-dom';
+import './Header.css';
+import logo from '@/assets/LOGO-CRAYFISH.png';
 function Header(){
     return(
         <header className="header">
             <div className="header-container">
-                <a href="#" className="logo">
+                <Link to="/" className="logo">
                     <img src={logo} alt="Logo" />
-                </a>
+                </Link>
                 <nav>
-                    <a href="">Sign Up</a>
-                    <a href="">Sign In</a>
+                    <Link to="register">Register</Link>
+                    <Link to="login">Sign In</Link>
                 </nav>
             </div>
         </header>

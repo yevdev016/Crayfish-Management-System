@@ -1,8 +1,10 @@
-import LandingPageLayout from "../components/layout/LandingPageLayout";
+import Hero from '../components/Hero'
+import Features from '../components/Features'
 const LandingPage = () => {
   return (
     <>
-    <LandingPageLayout />
+      <Hero />
+      <Features />
     </>
   );
 };
