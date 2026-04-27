@@ -1,4 +1,4 @@
-.sign-up-container {
+.auth-container {
     max-width: 400px;
     margin: 20px auto;
     padding: 10px 30px 20px 30px;
@@ -89,6 +89,9 @@
 
 .google-btn:hover {
   background-color: #f9f9f9;
+}
+.terms-services-container {
+  margin-bottom: 20px;
 }
 .terms-services-container span {
     margin: 10px auto;
