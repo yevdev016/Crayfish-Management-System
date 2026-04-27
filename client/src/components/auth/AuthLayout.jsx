@@ -24,9 +24,10 @@ const AuthLayout = ({children, isLogin}) => {
             </div>
             <div className='footer-link'>
                 {isLogin ? (
-                    <span>Already have an account? <Link to="/login">Sign In</Link></span>
-                ): (
                     <span>Don't have an account? <Link to="/register">Register</Link></span>
+
+                ): (
+                    <span>Already have an account? <Link to="/login">Sign In</Link></span>
                 )
                 }
             </div>

@@ -4,7 +4,7 @@ import Button from '../ui/Buttons';
 import AuthLayout from './AuthLayout';
 const LoginForm = () => {
     const [formData, setFormData] = useState({
-        userName: "",
+        username: "",
         password: "",
     });
 
@@ -26,10 +26,10 @@ const LoginForm = () => {
             <form onSubmit={handleSubmit}>
                 <Inputs 
                 label="Username" 
-                id="userName" 
+                id="username" 
                 type="text" 
                 onChange={handleChange} 
-                value={formData.userName}
+                value={formData.username}
                 />
 
                 <Inputs 
