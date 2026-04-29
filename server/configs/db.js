@@ -10,5 +10,15 @@ const db = new pg.Client({
     password: process.env.PG_PASSWORD,
     port: process.env.PG_PORT
 });
-db.connect();
+
+const connectDb = async () => {
+    try {
+        await db.connect();
+        console.log("Database is connected")
+    } catch(err) {
+        console.error('Database connection error: ', err);
+    }
+}
+connectDb();
+
 export default db;
