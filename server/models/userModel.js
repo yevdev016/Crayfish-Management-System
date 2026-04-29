@@ -19,7 +19,7 @@ export const findUserByEmail = async (email) => {
     return res.rows[0] || null;
 };
 
-export const findUserBygoogle_id = async (google_id) => {
+export const findUserByGoogleId = async (google_id) => {
     const query = `
     SELECT id, username, email, password, google_id FROM users WHERE google_id = $1;
     `;

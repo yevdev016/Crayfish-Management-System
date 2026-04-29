@@ -1,12 +1,11 @@
+import axios from 'axios'
 import { useState } from 'react'
 import Inputs from "../ui/Inputs";
 import Button from '../ui/Buttons';
 import AuthLayout from './AuthLayout';
 const RegisterForm = () => {
     const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
-        userName: "",
+        username: "",
         email: "",
         password: "",
         verifyPassword: ""
@@ -20,21 +19,24 @@ const RegisterForm = () => {
             [name]: value})
         );
     }
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => { 
         e.preventDefault();
-        console.log(formData)
-    }
+        try {
+            await axios.post("htttp://localhost:3000/api/auth/signup", formData);
+        } catch(err) {
+            console.log(err);
+        }
+    };
     return(
         <AuthLayout>
             <form onSubmit={handleSubmit}>
         
                 <Inputs 
                 label="Username" 
-                id="userName" 
+                id="username" 
                 type="text" 
                 onChange={handleChange} 
-                value={formData.userName}
+                value={formData.username}
                 />
 
                 <Inputs 

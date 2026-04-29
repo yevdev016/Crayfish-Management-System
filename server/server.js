@@ -1,9 +1,11 @@
 import express from 'express'
+import passport from 'passport';
 import dotenv from 'dotenv'
 dotenv.config();
 import cors from 'cors'
 import initDatabase from './configs/initDb.js';
-
+import authRoutes from './routes/authRoutes.js'
+import './configs/passport.js'
 const app = express();
 
 const port = process.env.SERVER_PORT || 3000;
@@ -14,10 +16,9 @@ app.use(cors({
     credentials: true
 }));
 app.use(express.json());
+app.use(passport.initialize());
 
-app.get("/", (req, res) => {
-    res.send("Hi");
-});
+app.use('/api/auth', authRoutes);
 
 app.listen(port, () => {
     console.log(`This server is running on port: ${port}`);
