@@ -26,3 +26,14 @@ export const findUserByGoogleId = async (google_id) => {
     const res = await db.query(query, [google_id]);
     return res.rows[0] || null;
 }
+export const googleUpdateInDb = async (userId, googleId) => {
+    const query = `
+        UPDATE users 
+        SET google_id = $1 
+        WHERE id = $2 
+        RETURNING *;
+    `;
+    const values = [googleId, userId];
+    const result = await db.query(query, values); 
+    return result.rows[0]; 
+};

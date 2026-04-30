@@ -1,15 +1,18 @@
-import axios from 'axios'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { signup } from '../../services/authServices';
 import Inputs from "../ui/Inputs";
 import Button from '../ui/Buttons';
 import AuthLayout from './AuthLayout';
 const RegisterForm = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: "",
         email: "",
         password: "",
-        verifyPassword: ""
     });
+    const [ loading, setLoading ] = useState(false);
+    const [ error, setError ] = useState('');
 
     const handleChange = (e) => {
         const {value, name} = e.target;
@@ -21,10 +24,23 @@ const RegisterForm = () => {
     }
     const handleSubmit = async (e) => { 
         e.preventDefault();
+        if(!formData.username || !formData.email || !formData.password){
+            setError('All fields are required');
+            return;
+        }
+        setLoading(true);
+        setError('');
         try {
-            await axios.post("htttp://localhost:3000/api/auth/signup", formData);
+            const response = await signup(formData);
+            if(response.status === 201){
+                navigate('/dashboard', {replace: true});
+                console.log('Registration Successful');
+            } 
         } catch(err) {
-            console.log(err);
+            setError("This email already exist. Try logging in", err);
+            
+        } finally{
+            setLoading(false);
         }
     };
     return(
@@ -55,16 +71,8 @@ const RegisterForm = () => {
                 onChange={handleChange} 
                 value={formData.password}
                 />
-
-                <Inputs 
-                label="Verify Password" 
-                id="verifyPassword" 
-                type="password" 
-                onChange={handleChange} 
-                value={formData.verifyPassword}
-                />
-
-                <Button type="submit" variant="success" width='full'>
+                {error && <p className="error">{error}</p>}
+                <Button type="submit" variant="success" width='full' loading={loading}>
                     Register
                 </Button>
             </form>

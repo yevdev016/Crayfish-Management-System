@@ -6,7 +6,6 @@ export const signUpController = async (req, res) => {
     try {
         const user = await createUserService(username, email, password);
         const token = generateJwt(user.id);
-
         res.status(201).json({
             message: "User created successfully",
             user,

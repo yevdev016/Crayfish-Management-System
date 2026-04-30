@@ -1,9 +1,9 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
-import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import dotenv from 'dotenv';
-import { findUserByEmail, findUserByGoogleId, createUser } from "../models/userModel.js";
+import { findUserByEmail, findUserByGoogleId, createUser, googleUpdateInDb } from "../models/userModel.js";
 import { validatePassword } from "../services/authService.js";
 
 dotenv.config();
@@ -25,13 +25,13 @@ passport.use(
 );
 const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secret: process.env.JWT_SECRET
+    secretOrKey: process.env.JWT_SECRET
 };
 
 passport.use(
     new JwtStrategy(opts, async (jwt_payload, done) => {
         try {
-            const user = await findUserByEmail(jwt_payload);
+            const user = await findUserByEmail(jwt_payload.email);
             if(!user) return done(null, false);
             return done(null, user);
         } catch(err){
@@ -48,13 +48,26 @@ passport.use(
         },
         async(accessToken, refreshToken, profile, done) => {
             try {
-                const existingUser = await findUserByGoogleId(profile.id);
-                if(existingUser) return done(null, existingUser);
-                
-                const newUser = await createUser(profile.displayName, profile.email[0].value, null, profile.id);
-                done(null, user);
+                const email = profile.emails[0].value;
+                const googleId = profile.id;
+                let user = await findUserByGoogleId(googleId);
+
+                if(!user){
+                    user = await findUserByEmail(email);
+                    if(user) {
+                        user = await googleUpdateInDb (user.id, googleId);
+                    } else {
+                        user = await createUser(
+                            profile.displayName, 
+                            email, 
+                            'google', 
+                            googleId
+                        );
+                    }
+                }
+                return done(null, user);
             } catch(err){
-                done(err);
+                return done(err);
             }
         }
     )

@@ -97,3 +97,9 @@
     margin: 10px auto;
     font-size: .8rem;
 }
+.error {
+  color: red;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+}

@@ -5,10 +5,11 @@ import { createUser, findUserByEmail, findUserByGoogleId } from '../models/userM
 dotenv.config();
 
 export const createUserService = async (username, email, password, google_id = null) => {
+    const saltRounds = 10;
     const exististingUser = await findUserByEmail(email);
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
     if(exististingUser) throw new Error('User already exist');
-
-    return await createUser(username, email, password, google_id);
+    return await createUser(username, email, hashedPassword, google_id);
 }
 
 export const generateJwt = (userId) => {
@@ -17,7 +18,7 @@ export const generateJwt = (userId) => {
     });
 }
 
-export const validatePassword = async (storedPassword, enteredPassword) => {
+export const validatePassword  = async (storedPassword, enteredPassword) => {
     return bcrypt.compare(enteredPassword, storedPassword);
 }
 export const findUserByGoogleIdService = async (google_id) => {
