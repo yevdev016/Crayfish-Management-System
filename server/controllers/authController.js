@@ -6,11 +6,18 @@ export const signUpController = async (req, res) => {
     try {
         const user = await createUserService(username, email, password);
         const token = generateJwt(user.id);
+        res.cookie('authToken', token, { 
+                httpOnly: true, 
+                secure: false});
         res.status(201).json({
             message: "User created successfully",
-            user,
-            token
+            user: {
+                id: user.id,
+                username: user.username,
+                email: user.email
+            }
         });
+        console.log(token)
     } catch(err) {
         res.status(400).json({
             message: err.message

@@ -3,10 +3,14 @@ import jwt from 'jsonwebtoken'
 import { signUpController, signinController, googleCallback } from '../controllers/authController.js';
 import passport from 'passport';
 import { generateJwt } from '../services/authService.js';
+import { authenticateJWT } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 router.post('/signin', signinController);
 router.post('/signup', signUpController);
+router.get('/check-auth', authenticateJWT, (req, res) => {
+    res.status(200).json({message: 'Authenticated'});
+});
 router.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 router.get('/google/callback', 
     passport.authenticate('google', {
@@ -16,12 +20,12 @@ router.get('/google/callback',
     (req, res) => {
         try {
             const userId = req.user.id;
-
             const token = generateJwt(userId);
-            res.redirect(`http://localhost:5173/dashboard?token=${token}`);
+            res.cookie('authToken', token, { 
+                httpOnly: true, 
+                secure: false});
         } catch(err) {
             console.error("Token Generation Error:", error);
-            res.redirect('http://localhost:5173/login?error=token_generation_failed');
         }
         
     }

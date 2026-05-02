@@ -24,7 +24,7 @@ passport.use(
     })
 );
 const opts = {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    jwtFromRequest: ExtractJwt.fromExtractors([req => req.cookies.authToken]),
     secretOrKey: process.env.JWT_SECRET
 };
 

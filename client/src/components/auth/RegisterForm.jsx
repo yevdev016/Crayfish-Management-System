@@ -6,13 +6,13 @@ import Button from '../ui/Buttons';
 import AuthLayout from './AuthLayout';
 const RegisterForm = () => {
     const navigate = useNavigate();
+    const [ loading, setLoading ] = useState(false);
+    const [ error, setError ] = useState('');
     const [formData, setFormData] = useState({
         username: "",
         email: "",
         password: "",
     });
-    const [ loading, setLoading ] = useState(false);
-    const [ error, setError ] = useState('');
 
     const handleChange = (e) => {
         const {value, name} = e.target;
@@ -30,6 +30,7 @@ const RegisterForm = () => {
         }
         setLoading(true);
         setError('');
+
         try {
             const response = await signup(formData);
             if(response.status === 201){

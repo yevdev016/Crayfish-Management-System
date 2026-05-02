@@ -1,10 +1,15 @@
+import { useState } from 'react';
 import { Routes, Route} from 'react-router-dom'
 import LandingPageLayout from '../components/layout/LandingPageLayout'
 import LandingPage from '../pages/LandingPage';
 import Register from '../pages/RegisterPage';
 import Login from '../pages/LoginPage'
 import Dashboard from '../pages/Dashboard'
+import ProtectedRoute from './ProtectedRoute';
+
 const AppRoute = () => {
+    const [ isAuthenticated, setIsAuthenticated ] = useState(false);
+    
     return(
         <Routes>
             <Route path="/" element={<LandingPageLayout />}>
@@ -13,8 +18,8 @@ const AppRoute = () => {
                 <Route path='login' element={<Login />}/>
             </Route>
 
-            <Route path='/dashboard' element={<Dashboard />}>
-
+            <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>}>
+                <Route path='/dashboard' element={<Dashboard />} />
             </Route>
         </Routes>
     );

@@ -1,7 +1,20 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const signup = async (userData) => {
-    return await axios.post(`${API_URL}/auth/signup`, userData);
-}
+    try {
+        const response = await axios.post(`${API_URL}/auth/signup`, userData, {
+            withCredentials: true
+        });
+        return response;
+    } catch (err) {
+        if (err.response) {
+            throw new Error(err.response.data.message || 'Error occurred during signup');
+        } else if (err.request) {
+            throw new Error('Network error. Please check your connection.');
+        } else {
+            throw new Error('An unexpected error occurred.');
+        }
+    }
+};
