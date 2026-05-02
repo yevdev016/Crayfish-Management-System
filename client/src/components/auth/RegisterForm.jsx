@@ -34,7 +34,7 @@ const RegisterForm = () => {
         try {
             const response = await signup(formData);
             if(response.status === 201){
-                navigate('/dashboard', {replace: true});
+                navigate('/dashboard');
                 console.log('Registration Successful');
             } 
         } catch(err) {

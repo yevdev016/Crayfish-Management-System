@@ -23,9 +23,12 @@ router.get('/google/callback',
             const token = generateJwt(userId);
             res.cookie('authToken', token, { 
                 httpOnly: true, 
-                secure: false});
+                secure: false
+            });
+            res.redirect('http://localhost:5173/dashboard');
         } catch(err) {
-            console.error("Token Generation Error:", error);
+            console.error("Token Generation Error:", err);
+            res.redirect('http://localhost:5173/login');
         }
         
     }

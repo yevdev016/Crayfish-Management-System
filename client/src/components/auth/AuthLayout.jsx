@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import './AuthLayout.css'
 import google from '@/assets/icon-google.svg'
 import logo from '@/assets/LOGO-CRAYFISH.png'
+
 const AuthLayout = ({children, isLogin}) => {
     return(
          <div className='auth-container'>

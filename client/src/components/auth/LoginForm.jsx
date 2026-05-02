@@ -2,9 +2,12 @@ import { useState } from 'react'
 import Inputs from "../ui/Inputs";
 import Button from '../ui/Buttons';
 import AuthLayout from './AuthLayout';
+import { signin } from '../../services/authServices';
+import { useNavigate } from 'react-router-dom';
 const LoginForm = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        username: "",
+        email: "",
         password: "",
     });
 
@@ -17,19 +20,26 @@ const LoginForm = () => {
         );
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData)
+        try {
+            const response = await signin(formData);
+            if(response.status === 200){
+                navigate('/dashboard');
+            }
+        } catch(err){
+            console.log(err)
+        }
     }
     return(
         <AuthLayout isLogin={true}>
             <form onSubmit={handleSubmit}>
                 <Inputs 
-                label="Username" 
-                id="username" 
-                type="text" 
+                label="email" 
+                id="email" 
+                type="email" 
                 onChange={handleChange} 
-                value={formData.username}
+                value={formData.email}
                 />
 
                 <Inputs 

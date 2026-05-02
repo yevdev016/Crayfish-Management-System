@@ -18,3 +18,21 @@ export const signup = async (userData) => {
         }
     }
 };
+export const signin = async (userData) => {
+    try {
+        const response = await axios.post(`${API_URL}/auth/signin`, userData, {
+            withCredentials: true
+        });
+        console.log(response)
+        return response;
+    } catch(err) {
+        if (err.response) {
+            throw new Error(err.response.data.message || 'Error occurred during signin');
+        } else if (err.request) {
+            throw new Error('Network error. Please check your connection.');
+        } else {
+            throw new Error('An unexpected error occurred.');
+        }
+    }
+}
+

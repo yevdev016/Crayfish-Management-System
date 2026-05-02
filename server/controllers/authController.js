@@ -34,6 +34,10 @@ export const signinController = async (req, res, next) => {
             });
         }
         const token = generateJwt(user.id);
+        res.cookie('authToken', token, { 
+                httpOnly: true, 
+                secure: false});
+                
         return res.status(200).json({
             message: 'Login successful',
             user: {
