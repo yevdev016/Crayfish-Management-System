@@ -4,6 +4,7 @@ import { signUpController, signinController, googleCallback } from '../controlle
 import passport from 'passport';
 import { generateJwt } from '../services/authService.js';
 import { authenticateJWT } from '../middleware/authMiddleware.js';
+import { setAuthCookie } from '../utils/cookieUtils.js';
 const router = express.Router();
 
 router.post('/signin', signinController);
@@ -21,10 +22,7 @@ router.get('/google/callback',
         try {
             const userId = req.user.id;
             const token = generateJwt(userId);
-            res.cookie('authToken', token, { 
-                httpOnly: true, 
-                secure: false
-            });
+            setAuthCookie(res, token);
             res.redirect('http://localhost:5173/dashboard');
         } catch(err) {
             console.error("Token Generation Error:", err);
