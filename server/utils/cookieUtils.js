@@ -2,6 +2,7 @@ export const setAuthCookie = (res, token) => {
     res.cookie('authToken', token, { 
             httpOnly: true, 
             secure: false,
+            sameSite: 'lax',
             maxAge: 3600000
         }
     );

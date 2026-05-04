@@ -23,7 +23,6 @@ export const signin = async (userData) => {
         const response = await axios.post(`${API_URL}/auth/signin`, userData, {
             withCredentials: true
         });
-        console.log(response)
         return response;
     } catch(err) {
         if (err.response) {
