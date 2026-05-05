@@ -34,4 +34,16 @@ export const signin = async (userData) => {
         }
     }
 }
+export const signout = async () => {
+    try {
+        const response = await axios.post(`${API_URL}/auth/signout`,{}, {
+            withCredentials: true
+        });
+        console.log(response.data)
+        return response.data
+    } catch (err){
+        console.log("Error logging out", err)
+        throw err
+    }
+}
 

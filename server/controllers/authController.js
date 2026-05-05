@@ -1,6 +1,6 @@
 import passport from 'passport';
 import { createUserService, generateJwt } from '../services/authService.js';
-import { setAuthCookie } from '../utils/cookieUtils.js';
+import { setAuthCookie, clearAuthCookie } from '../utils/cookieUtils.js';
 export const signUpController = async (req, res) => {
     const { username, email, password } = req.body;
     try {
@@ -44,5 +44,21 @@ export const signinController = async (req, res, next) => {
             token
         });
     })(req, res, next);
+}
+export const signoutController = async (req, res) => {
+    try {
+        clearAuthCookie(res);
+        return res.status(200).json({
+            success: true,
+            message: "Logged out successful"
+        })
+    } catch(err){
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: "Logout failed"
+        })
+    }
+    
 }
 export const googleCallback = passport.authenticate('google', {failureRedirect: '/'});

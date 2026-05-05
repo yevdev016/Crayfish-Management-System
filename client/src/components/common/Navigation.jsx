@@ -8,7 +8,19 @@ import lifecycle from '@/assets/lifecycle.png'
 import report from '@/assets/report.png'
 import logout from '@/assets/logout.png'
 import './Navigation.css'
+import { signout } from '../../services/authServices';
+import { useAuth } from '../../context/AuthContext'
 const AdminNav = () => {
+    const { setIsAuthenticated } = useAuth();
+    const handleLogout = async () => {
+        try {
+            await signout();
+            setIsAuthenticated(false);
+        } catch(err){
+            console.log("Error setting authentication",err)
+        }
+        
+    }
     return(
         <div className="navigation-container">
             <div className='nav-logo-container'>
@@ -40,7 +52,7 @@ const AdminNav = () => {
 
             <div className='logout-container'>
                 <img src={logout} alt="Logout" />
-                <Button variant='none'>Logout</Button>
+                <Button variant='none' onClick={handleLogout}>Logout</Button>
             </div>
         </div>
     );

@@ -1,6 +1,6 @@
 import express from 'express';
 import jwt from 'jsonwebtoken'
-import { signUpController, signinController, googleCallback } from '../controllers/authController.js';
+import { signUpController, signinController, googleCallback, signoutController } from '../controllers/authController.js';
 import passport from 'passport';
 import { generateJwt } from '../services/authService.js';
 import { authenticateJWT } from '../middleware/authMiddleware.js';
@@ -9,6 +9,7 @@ const router = express.Router();
 
 router.post('/signin', signinController);
 router.post('/signup', signUpController);
+router.post('/signout', signoutController);
 router.get('/check-auth', authenticateJWT, (req, res) => {
     res.status(200).json({message: 'Authenticated'});
 });
