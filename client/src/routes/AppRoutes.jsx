@@ -5,19 +5,21 @@ import Register from '../pages/RegisterPage';
 import Login from '../pages/LoginPage'
 import Dashboard from '../pages/Dashboard'
 import ProtectedRoute from './ProtectedRoute';
-import { useAuth } from '../context/AuthContext';
-const AppRoute = () => {
-    const {isAuthenticated, setIsAuthenticated } = useAuth();
-    
+import GuestRoute from './GuestRoute';
+const AppRoute = () => {    
     return(
         <Routes>
             <Route path="/" element={<LandingPageLayout />}>
                 <Route index element={<LandingPage />}/>
-                <Route path="register" element={<Register />}/>
-                <Route path='login' element={<Login />}/>
+
+                <Route element={<GuestRoute />}>
+                    <Route path="register" element={<Register />}/>
+                    <Route path='login' element={<Login />}/>
+                </Route>
+               
             </Route>
 
-            <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>}>
+            <Route element={<ProtectedRoute />}>
                 <Route path='/dashboard' element={<Dashboard />} />
             </Route>
         </Routes>
