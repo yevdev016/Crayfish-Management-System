@@ -25,6 +25,11 @@
     border: 2px solid #007bff;
     color: #007bff;
 }
-
+.btn-none {
+    background-color: transparent;
+    border: none;
+    color: rgb(255, 255, 255);
+    font-size: 1rem;
+}
 .btn-full { width: 100%; }
 .btn-fit { width: fit-content; }
