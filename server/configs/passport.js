@@ -12,10 +12,10 @@ passport.use(
     new LocalStrategy({usernameField: 'email'}, async(email, password, done) => {
         try {
             const user = await findUserByEmail(email);
-            if(!user) return done(null, false, {message: "User not found"});
+            if(!user) return done(null, false, {message: "Invalid email or password"});
             
             const isMatch = await validatePassword(user.password, password);
-            if(!isMatch) return done(null, false, {message: "Invalid Credentials"});
+            if(!isMatch) return done(null, false, {message: "Invalid email or password"});
 
             return done(null, user);
         } catch(err) {
@@ -61,7 +61,7 @@ passport.use(
                         user = await createUser(
                             profile.displayName, 
                             email, 
-                            'google', 
+                            null, 
                             googleId
                         );
                     }

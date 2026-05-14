@@ -6,7 +6,7 @@ const initDatabase = async () => {
             id SERIAL PRIMARY KEY,
             username VARCHAR(50) NOT NULL,
             email VARCHAR(250) UNIQUE NOT NULL,
-            password TEXT NOT NULL,
+            password TEXT,
             google_id TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );

@@ -3,10 +3,12 @@ import { signUpController, signinController, googleCallback, signoutController }
 import passport from 'passport';
 import { generateJwt } from '../services/authService.js';
 import { setAuthCookie } from '../utils/cookieUtils.js';
+import { validate } from '../middleware/validate.js';
+import { signinSchema, signupSchema } from '../configs/validationSchemas.js';
 const router = express.Router();
 
-router.post('/signin', signinController);
-router.post('/signup', signUpController);
+router.post('/signin', validate(signinSchema), signinController);
+router.post('/signup', validate(signupSchema), signUpController);
 router.post('/signout', signoutController);
 router.get('/check-auth', passport.authenticate('jwt', {session: false}), (req, res) => {
     res.status(200).json({message: 'Authenticated'});

@@ -15,7 +15,6 @@ export const signUpController = async (req, res) => {
                 email: user.email
             }
         });
-        console.log(token)
     } catch(err) {
         res.status(400).json({
             message: err.message
@@ -40,8 +39,7 @@ export const signinController = async (req, res, next) => {
                 id: user.id,
                 username: user.username,
                 email: user.email
-            },
-            token
+            }
         });
     })(req, res, next);
 }
