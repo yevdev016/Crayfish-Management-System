@@ -4,10 +4,11 @@ import { signup } from '../../services/authServices';
 import Inputs from "../ui/Inputs";
 import Button from '../ui/Buttons';
 import AuthLayout from './AuthLayout';
+import { useAuth } from '../../context/AuthContext';
 const RegisterForm = () => {
+    const { setIsAuthenticated, setIsError, isError } = useAuth();
     const navigate = useNavigate();
     const [ loading, setLoading ] = useState(false);
-    const [ error, setError ] = useState('');
     const [formData, setFormData] = useState({
         username: "",
         email: "",
@@ -15,6 +16,7 @@ const RegisterForm = () => {
     });
 
     const handleChange = (e) => {
+        setIsError('');
         const {value, name} = e.target;
 
         setFormData(prevData => ({
@@ -25,20 +27,21 @@ const RegisterForm = () => {
     const handleSubmit = async (e) => { 
         e.preventDefault();
         if(!formData.username || !formData.email || !formData.password){
-            setError('All fields are required');
+            setIsError('All fields are required');
             return;
         }
         setLoading(true);
-        setError('');
+        setIsError('');
 
         try {
             const response = await signup(formData);
             if(response.status === 201){
+                setIsAuthenticated(true);
                 navigate('/dashboard');
                 console.log('Registration Successful');
             } 
         } catch(err) {
-            setError("This email already exist. Try logging in", err);
+            setIsError(err.message);
             
         } finally{
             setLoading(false);
@@ -72,7 +75,7 @@ const RegisterForm = () => {
                 onChange={handleChange} 
                 value={formData.password}
                 />
-                {error && <p className="error">{error}</p>}
+                {isError && <p className="error">{isError}</p>}
                 <Button type="submit" variant="success" width='full' loading={loading}>
                     Register
                 </Button>

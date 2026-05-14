@@ -8,6 +8,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [isError, setIsError] = useState('');
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -22,6 +23,7 @@ export const AuthProvider = ({ children }) => {
             } catch (err) {
                 console.log(err);
                 setIsAuthenticated(false);
+                setIsError('');
             } finally {
                 setIsLoading(false);
             }
@@ -31,7 +33,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, isLoading }}>
+        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, isLoading, isError, setIsError }}>
             {children}
         </AuthContext.Provider>
     );

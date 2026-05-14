@@ -13,7 +13,7 @@ passport.use(
         try {
             const user = await findUserByEmail(email);
             if(!user) return done(null, false, {message: "Invalid email or password"});
-            
+            if(!user.password) return done(null, false, {message: "This account uses Google Sign-In. Please use Google to log in."});
             const isMatch = await validatePassword(user.password, password);
             if(!isMatch) return done(null, false, {message: "Invalid email or password"});
 

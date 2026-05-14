@@ -4,7 +4,9 @@ import Button from '../ui/Buttons';
 import AuthLayout from './AuthLayout';
 import { signin } from '../../services/authServices';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 const LoginForm = () => {
+    const { setIsAuthenticated, setIsError, isError } = useAuth();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: "",
@@ -12,6 +14,7 @@ const LoginForm = () => {
     });
 
     const handleChange = (e) => {
+        setIsError('');
         const {value, name} = e.target;
 
         setFormData(prevData => ({
@@ -25,10 +28,11 @@ const LoginForm = () => {
         try {
             const response = await signin(formData);
             if(response.status === 200){
+                setIsAuthenticated(true);
                 navigate('/dashboard');
             }
         } catch(err){
-            console.log(err)
+            setIsError(err.message);
         }
     }
     return(
@@ -49,7 +53,7 @@ const LoginForm = () => {
                 onChange={handleChange} 
                 value={formData.password}
                 />
-
+                {isError && <p className="error">{isError}</p>}
                 <Button type="submit" variant="success" width='full'>
                     Login
                 </Button>   

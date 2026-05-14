@@ -10,7 +10,8 @@ export const signup = async (userData) => {
         return response;
     } catch (err) {
         if (err.response) {
-            throw new Error(err.response.data.message || 'Error occurred during signup');
+            const messages = err.response.data.errors?.map(e => e.message).join(', ')
+            throw new Error(messages || err.response.data.message || 'Error occurred during signup');
         } else if (err.request) {
             throw new Error('Network error. Please check your connection.');
         } else {
@@ -26,7 +27,8 @@ export const signin = async (userData) => {
         return response;
     } catch(err) {
         if (err.response) {
-            throw new Error(err.response.data.message || 'Error occurred during signin');
+            const messages = err.response.data.errors?.map(e => e.message).join(', ')
+            throw new Error(messages || err.response.data.message || 'Error occurred during signin');
         } else if (err.request) {
             throw new Error('Network error. Please check your connection.');
         } else {

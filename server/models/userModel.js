@@ -1,5 +1,4 @@
 import db from '../configs/db.js'
-import bcrypt from 'bcrypt'
 
 export const createUser = async (username, email, password, google_id=null) => {
     const query = `
