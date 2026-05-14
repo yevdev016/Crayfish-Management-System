@@ -4,6 +4,7 @@ const DashboardLayout = () => {
     return(
         <>
         <Navigation />
+        <Outlet />
         </>
     );
 }

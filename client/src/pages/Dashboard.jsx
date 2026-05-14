@@ -1,13 +1,11 @@
-import Header from "../components/common/Header";
-import Footer from "../components/common/Footer";
-import DashboardLayout from "../components/layout/DashboardLayout";
-import { Outlet } from "react-router-dom";
+import { Outlet } from 'react-router-dom';
+import DashboardLayout from '../components/layout/DashboardLayout';
+
 const Dashboard = () => {
     return(
         <>
         <DashboardLayout />
         <Outlet />
-        <Footer />
         </>
     );
 }

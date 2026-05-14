@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
-import { createUser, findUserByEmail, findUserByGoogleId } from '../models/userModel.js'
+import { createUser, findUserById, findUserByGoogleId, findUserByEmail } from '../models/userModel.js'
 dotenv.config();
 
 export const createUserService = async (username, email, password, google_id = null) => {

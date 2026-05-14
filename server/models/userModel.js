@@ -11,14 +11,22 @@ export const createUser = async (username, email, password, google_id=null) => {
     return res.rows[0];
 };
 
-export const findUserByEmail = async (email) => {
+export const findUserById = async (id) => {
     const query = `
-    SELECT id, username, email, password, google_id FROM users WHERE email = $1;
+    SELECT id, username, email, password, google_id FROM users WHERE id = $1;
     `;
-    const res = await db.query(query, [email]);
+    const res = await db.query(query, [id]);
     return res.rows[0] || null;
 };
 
+export const findUserByEmail = async (email) => {
+    const query = 
+    `
+    SELECT id, username, email, password, google_id FROM users WHERE email = $1;
+    `
+    const res = await db.query(query, [email]);
+    return res.rows[0] || null;
+}
 export const findUserByGoogleId = async (google_id) => {
     const query = `
     SELECT id, username, email, password, google_id FROM users WHERE google_id = $1;

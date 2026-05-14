@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import Inputs from "../ui/Inputs";
 import Button from '../ui/Buttons';
 import AuthLayout from './AuthLayout';

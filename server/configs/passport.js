@@ -3,7 +3,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import dotenv from 'dotenv';
-import { findUserByEmail, findUserByGoogleId, createUser, googleUpdateInDb } from "../models/userModel.js";
+import { findUserByEmail, findUserById, findUserByGoogleId, createUser, googleUpdateInDb } from "../models/userModel.js";
 import { validatePassword } from "../services/authService.js";
 
 dotenv.config();
@@ -31,7 +31,7 @@ const opts = {
 passport.use(
     new JwtStrategy(opts, async (jwt_payload, done) => {
         try {
-            const user = await findUserByEmail(jwt_payload.email);
+            const user = await findUserById(jwt_payload.id);
             if(!user) return done(null, false);
             return done(null, user);
         } catch(err){
@@ -39,6 +39,7 @@ passport.use(
         }
     })
 );
+
 passport.use(
     new GoogleStrategy(
         {
