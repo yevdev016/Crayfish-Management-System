@@ -1,0 +1,58 @@
+.habitats-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    margin: 0 10px 20px;
+    background-color: #fff;
+    border-left: 4px solid #004d75;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.habitats-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.habitats-add-btn {
+    padding: 10px 20px;
+    background-color: #004d75;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.habitats-add-btn:hover {
+    background-color: #1974a5;
+}
+
+@media screen and (max-width: 768px) {
+    .habitats-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .habitats-title {
+        font-size: 22px;
+    }
+
+    .habitats-add-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .habitats-title {
+        font-size: 20px;
+    }
+}

@@ -1,0 +1,96 @@
+.stage-card-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.stage-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 24px 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    border-top: 4px solid;
+    min-width: 140px;
+    text-align: center;
+}
+
+.stage-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+}
+
+.stage-card-icon svg {
+    width: 28px;
+    height: 28px;
+}
+
+.stage-card-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.stage-card-count {
+    font-size: 24px;
+    font-weight: 700;
+    color: #004d75;
+}
+
+.stage-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    flex-shrink: 0;
+}
+
+.stage-arrow svg {
+    width: 24px;
+    height: 24px;
+}
+
+@media screen and (max-width: 1024px) {
+    .stage-card {
+        min-width: 120px;
+        padding: 20px 16px;
+    }
+
+    .stage-card-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .stage-card-icon svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .stage-card-count {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .stage-card-wrapper {
+        flex-direction: column;
+    }
+
+    .stage-arrow {
+        transform: rotate(90deg);
+        width: auto;
+        height: 24px;
+    }
+
+    .stage-card {
+        min-width: 160px;
+        padding: 16px 20px;
+    }
+}

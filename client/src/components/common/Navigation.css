@@ -1,111 +1,176 @@
+/* ── Base sidebar (collapsed) ── */
 .navigation-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: 20px;
     background-color: #004d75;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    height: 100vh;  
+    height: 100vh;
+    width: 70px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    padding: 16px 8px;
+    transition: width 0.3s ease;
+    overflow: hidden;
 }
 
+/* ── Expanded ── */
+.navigation-container.nav-expanded {
+    width: 260px;
+    padding: 20px;
+    align-items: center;
+}
+
+/* ── Arrow toggle ── */
+.nav-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+.nav-arrow:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.nav-arrow svg {
+    display: block;
+}
+
+/* ── Logo ── */
 .nav-logo-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 30px; 
+    margin-bottom: 24px;
+    width: 100%;
+    text-decoration: none;
 }
-
 .nav-logo-container img {
     height: auto;
-    width: 250px;
+    width: 200px;
     border-radius: 5px;
+    transition: opacity 0.3s;
 }
 
+.nav-collapsed .nav-logo-container {
+    display: none;
+}
+
+/* ── Nav items ── */
 .navigation {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; 
+    align-items: flex-start;
     width: 100%;
+    flex: 1;
 }
 
-.navigation-item, .logout-container {
-    font-size: 16px;
+.navigation-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     color: #fff;
     font-weight: 500;
-    margin-bottom: 20px; 
-    transition: color 0.3s ease;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    column-gap: 15px; 
+    margin-bottom: 20px;
     padding: 5px 10px;
     border-radius: 5px;
-    transition: background-color 0.6s;
     cursor: pointer;
+    transition: background-color 0.6s, color 0.3s ease;
+    white-space: nowrap;
+    width: 100%;
+    text-decoration: none;
+    font-size: 16px;
 }
 .navigation-item:hover {
     background-color: #1974a5;
+    color: #50b3ff;
 }
 
 .navigation-item img {
     height: 30px;
     width: auto;
+    flex-shrink: 0;
 }
-.logout-container img {
-    height: 30px;
-    width: auto;
+
+/* ── Labels (hidden when collapsed) ── */
+.nav-collapsed .nav-label {
+    display: none;
+}
+
+/* ── Collapsed: center icons ── */
+.nav-collapsed .navigation-item {
+    justify-content: center;
+    padding: 5px 0;
+}
+
+.nav-collapsed .navigation-item:hover {
+    background-color: #1974a5;
+}
+
+/* ── Logout ── */
+.logout-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #fff;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.6s;
+    white-space: nowrap;
+    width: 100%;
+    border: none;
+    background: none;
+    font-family: inherit;
+    font-size: 16px;
 }
 .logout-container:hover {
     background-color: rgb(236, 21, 21);
 }
-.navigation-item a {
-    color: #fff;
-    font-size: 16px;
+.logout-container img {
+    height: 30px;
+    width: auto;
+    flex-shrink: 0;
 }
 
-.navigation-item:hover {
-    color: #50b3ff;
+.nav-collapsed .logout-container {
+    justify-content: center;
+    padding: 5px 0;
 }
 
-.log-out-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; 
-    margin-top: auto;  
-    width: 100%;
-    margin-left: 20px; 
+/* ── Tablet ── */
+@media screen and (max-width: 1024px) {
+    .nav-collapsed .navigation-item img,
+    .nav-collapsed .logout-container img {
+        height: 26px;
+    }
 }
 
-
-@media screen and (max-width: 768px) {
+/* ── Small mobile ── */
+@media screen and (max-width: 480px) {
     .navigation-container {
-        padding: 20px;
+        width: 60px;
+        padding: 12px 6px;
     }
 
-    .navigation-item {
-        font-size: 14px;
-        margin-bottom: 15px;
-        width: 100%;
-        padding: 8px 10px;
+    .navigation-container.nav-expanded {
+        width: 220px;
     }
 
-    button {
-        padding: 12px 25px;
-    }
-}
-
-@media screen and (min-width: 1025px) {
-    .navigation-container {
-        padding: 25px 40px;
+    .nav-logo-container img {
+        width: 160px;
     }
 
-    .navigation-item {
-        font-size: 18px;
-        margin-bottom: 25px;
-    }
-
-    button {
-        padding: 14px 30px;
+    .navigation-item img,
+    .logout-container img {
+        height: 24px;
     }
 }

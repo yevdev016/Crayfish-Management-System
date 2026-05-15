@@ -1,11 +1,12 @@
-import Header from './components/common/Header'
-import LandingPage from './pages/LandingPage'
 import AppRoute from './routes/AppRoutes'
 import { AuthProvider } from './context/AuthContext'
+import { InventoryProvider } from './context/InventoryContext'
 function App() {
   return (
     <AuthProvider>
-      <AppRoute />
+      <InventoryProvider>
+        <AppRoute />
+      </InventoryProvider>
     </AuthProvider>
   )
 }

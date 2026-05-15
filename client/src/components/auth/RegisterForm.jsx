@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { signup } from '../../services/authServices';
+import { signup } from '@/services/authServices';
 import Inputs from "../ui/Inputs";
-import Button from '../ui/Buttons';
+import Button from '@/components/ui/Buttons';
 import AuthLayout from './AuthLayout';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 const RegisterForm = () => {
     const { setIsAuthenticated, setIsError, isError } = useAuth();
     const navigate = useNavigate();

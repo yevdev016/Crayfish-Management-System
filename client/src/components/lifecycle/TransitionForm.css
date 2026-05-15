@@ -1,0 +1,25 @@
+.form-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.form-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.form-arrow-symbol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 10px;
+    width: 24px;
+    flex-shrink: 0;
+}
+
+.form-arrow-symbol svg {
+    width: 20px;
+    height: 20px;
+}

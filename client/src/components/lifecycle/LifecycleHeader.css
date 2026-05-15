@@ -1,0 +1,52 @@
+.lifecycle-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    margin: 0 10px 20px;
+    background-color: #fff;
+    border-left: 4px solid #004d75;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.lifecycle-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.lifecycle-record-btn {
+    padding: 10px 20px;
+    background-color: #004d75;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.lifecycle-record-btn:hover {
+    background-color: #1974a5;
+}
+
+@media screen and (max-width: 768px) {
+    .lifecycle-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .lifecycle-title {
+        font-size: 22px;
+    }
+
+    .lifecycle-record-btn {
+        width: 100%;
+        text-align: center;
+    }
+}

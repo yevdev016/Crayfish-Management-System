@@ -1,0 +1,81 @@
+.report-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    margin: 0 10px 12px;
+}
+
+.report-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background-color: #e8f0fe;
+    color: #004d75;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.report-card-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.report-card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.report-card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 4px;
+}
+
+.report-card-desc {
+    font-size: 13px;
+    color: #888;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.report-card-btn {
+    padding: 8px 18px;
+    background-color: #004d75;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.report-card-btn:hover:not(:disabled) {
+    background-color: #1974a5;
+}
+
+.report-card-btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+@media screen and (max-width: 768px) {
+    .report-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 16px;
+    }
+
+    .report-card-btn {
+        width: 100%;
+    }
+}

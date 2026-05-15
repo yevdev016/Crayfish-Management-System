@@ -1,0 +1,134 @@
+.habitat-overview {
+    flex: 1;
+}
+
+.habitat-table {
+    display: flex;
+    flex-direction: column;
+}
+
+.habitat-table-header {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 0.8fr 0.6fr;
+    padding: 10px 16px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.habitat-table-row {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 0.8fr 0.6fr;
+    align-items: center;
+    padding: 10px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+}
+
+.habitat-table-row:last-child {
+    border-bottom: none;
+}
+
+.habitat-table-row:hover {
+    background-color: #f8f9fa;
+}
+
+.col-habitat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    color: #1a1a1a;
+    font-size: 13px;
+}
+
+.habitat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    background-color: #e8f0fe;
+    border-radius: 6px;
+    color: #004d75;
+    flex-shrink: 0;
+}
+
+.habitat-icon svg {
+    width: 14px;
+    height: 14px;
+}
+
+.col-species {
+    color: #555;
+    font-size: 12px;
+}
+
+.col-stage {
+    display: flex;
+    align-items: center;
+}
+
+.stage-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.stage-adult {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.stage-juvenile {
+    background-color: #e3f2fd;
+    color: #1565c0;
+}
+
+.stage-crayling {
+    background-color: #fce4ec;
+    color: #c62828;
+}
+
+.stage-berried {
+    background-color: #fff3e0;
+    color: #e65100;
+}
+
+.col-count {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: right;
+}
+
+@media screen and (max-width: 1024px) {
+    .habitat-table-header,
+    .habitat-table-row {
+        grid-template-columns: 1.2fr 0.7fr 0.5fr;
+    }
+
+    .col-species {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .habitat-table-header,
+    .habitat-table-row {
+        padding: 8px 12px;
+    }
+
+    .col-habitat {
+        font-size: 12px;
+    }
+
+    .col-count {
+        font-size: 14px;
+    }
+}

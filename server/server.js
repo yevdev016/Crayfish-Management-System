@@ -7,7 +7,6 @@ import initDatabase from './configs/initDb.js';
 import authRoutes from './routes/authRoutes.js'
 import './configs/passport.js'
 import cookieParser from 'cookie-parser'
-import rateLimit from 'express-rate-limit'
 import helmet from 'helmet'
 const app = express();
 app.use(helmet());
@@ -21,14 +20,6 @@ app.use(cors({
 app.use(express.json());
 app.use(passport.initialize());
 
-const authLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 10,
-    message: {message: "Too many attempts. Try again later"},
-    standardHeaders: true,
-    legacyHeaders: false
-})
-app.use('/api/auth', authLimiter);
 app.use('/api/auth', authRoutes);
 
 app.listen(port, () => {

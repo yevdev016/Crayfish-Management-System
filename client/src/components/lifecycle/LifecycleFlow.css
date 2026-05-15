@@ -1,0 +1,20 @@
+.lifecycle-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 0 10px 24px;
+    padding: 24px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    overflow-x: auto;
+}
+
+@media screen and (max-width: 768px) {
+    .lifecycle-flow {
+        flex-direction: column;
+        padding: 20px 16px;
+        gap: 0;
+    }
+}

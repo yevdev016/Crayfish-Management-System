@@ -1,0 +1,83 @@
+.delete-modal {
+    background: #fff;
+    border-radius: 12px;
+    padding: 32px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.delete-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #fce4ec;
+    color: #c62828;
+    margin-bottom: 16px;
+}
+
+.delete-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.delete-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 8px;
+}
+
+.delete-message {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 24px;
+    line-height: 1.5;
+}
+
+.delete-message strong {
+    color: #1a1a1a;
+}
+
+.delete-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.modal-btn.cancel {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    color: #555;
+    transition: background-color 0.2s;
+}
+
+.modal-btn.cancel:hover {
+    background-color: #e0e0e0;
+}
+
+.modal-btn.delete-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: #c62828;
+    color: #fff;
+    transition: background-color 0.2s;
+}
+
+.modal-btn.delete-btn:hover {
+    background-color: #e53935;
+}

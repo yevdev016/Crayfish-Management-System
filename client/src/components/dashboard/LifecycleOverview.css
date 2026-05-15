@@ -1,0 +1,78 @@
+.lifecycle-overview {
+    flex: 1;
+}
+
+.lifecycle-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 16px;
+}
+
+.lifecycle-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.lifecycle-item:hover {
+    background-color: #f0f1f3;
+}
+
+.lifecycle-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.lifecycle-icon svg {
+    width: 17px;
+    height: 17px;
+}
+
+.lifecycle-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.lifecycle-value {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.2;
+}
+
+.lifecycle-label {
+    font-size: 12px;
+    color: #888;
+    font-weight: 500;
+}
+
+@media screen and (max-width: 768px) {
+    .lifecycle-item {
+        padding: 10px 12px;
+    }
+
+    .lifecycle-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .lifecycle-icon svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .lifecycle-value {
+        font-size: 16px;
+    }
+}

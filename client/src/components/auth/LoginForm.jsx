@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import Inputs from "../ui/Inputs";
-import Button from '../ui/Buttons';
+import Button from '@/components/ui/Buttons';
 import AuthLayout from './AuthLayout';
-import { signin } from '../../services/authServices';
+import { signin } from '@/services/authServices';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 const LoginForm = () => {
     const { setIsAuthenticated, setIsError, isError } = useAuth();
     const navigate = useNavigate();
