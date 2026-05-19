@@ -1,5 +1,5 @@
-import Hero from '@/components/Hero'
-import Features from '@/components/Features'
+import Hero from '@/components/landing/Hero'
+import Features from '@/components/landing/Features'
 const LandingPage = () => {
   return (
     <>

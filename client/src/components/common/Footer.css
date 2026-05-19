@@ -1,0 +1,22 @@
+.footer-section {
+    margin-top: auto;
+    padding: 20px 24px;
+    text-align: center;
+    border-top: 1px solid #e0e0e0;
+}
+
+.footer-section p {
+    font-size: 13px;
+    color: #999;
+    margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .footer-section {
+        padding: 16px;
+    }
+
+    .footer-section p {
+        font-size: 12px;
+    }
+}

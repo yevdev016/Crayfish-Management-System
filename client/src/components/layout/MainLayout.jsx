@@ -1,5 +1,5 @@
-import Navigation from "../common/Navigation";
-import Footer from "../common/Footer";
+import Navigation from "@/components/common/Navigation";
+import Footer from "@/components/common/Footer";
 import { Outlet } from 'react-router-dom';
 import './MainLayout.css';
 
@@ -9,6 +9,7 @@ const MainLayout = () => {
             <Navigation />
             <div className="main-content">
                 <Outlet />
+                <Footer />
             </div>
         </div>
     );
