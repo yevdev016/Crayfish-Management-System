@@ -21,23 +21,33 @@ const Habitats = () => {
         setShowForm(true)
     }
 
-    const handleSave = (data) => {
-        if (editingHabitat) {
-            updateHabitat(editingHabitat.id, data)
-        } else {
-            addHabitat(data)
+    const handleSave = async (data) => {
+        try {
+            if (editingHabitat) {
+               await updateHabitat(editingHabitat.id, data)
+            } else {
+               await addHabitat(data)
+            }
+            setShowForm(false)
+            setEditingHabitat(null)
+        } catch(err){
+            console.error(err)
         }
-        setShowForm(false)
-        setEditingHabitat(null)
+        
     }
 
     const handleDelete = (habitat) => {
         setDeletingHabitat(habitat)
     }
 
-    const handleDeleteConfirm = (id) => {
-        deleteHabitat(id)
-        setDeletingHabitat(null)
+    const handleDeleteConfirm = async(id) => {
+        try {
+           await deleteHabitat(id)
+            setDeletingHabitat(null)
+        } catch(err){
+            console.error(err)
+        }
+        
     }
 
     return (

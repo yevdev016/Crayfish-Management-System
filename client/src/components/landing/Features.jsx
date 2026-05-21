@@ -1,22 +1,54 @@
+import { Link } from 'react-router-dom'
+
 const Features = () => {
     return (
-        <section className="features-section">
-            <h2>Farm Management System</h2>
-            <div className="features">
-                <div className="feature-item">
-                    <h3>Habitat Diversity</h3>
-                    <p>Manage and monitor populations across ponds, aquariums, and drum setups from a single dashboard.</p>
+        <>
+            <section className="features-section">
+                <div className="features-header">
+                    <h2>Everything You Need to Manage Your Farm</h2>
+                    <p>Our comprehensive toolkit helps you monitor, track, and optimize every aspect of your crayfish operations.</p>
                 </div>
-                <div className="feature-item">
-                    <h3>Lifecycle Tracking</h3>
-                    <p>Record development stages from berried females and craylings to juvenile and adult growth phases.</p>
+                <div className="features-grid">
+                    <div className="feature-card">
+                        <div className="feature-icon">🏡</div>
+                        <h3>Habitat Management</h3>
+                        <p>Monitor and manage multiple habitats including ponds, aquariums, and drum systems from a centralized dashboard.</p>
+                    </div>
+                    <div className="feature-card">
+                        <div className="feature-icon">🔄</div>
+                        <h3>Lifecycle Tracking</h3>
+                        <p>Record and track every stage of development from berried females through craylings, juveniles, and adults.</p>
+                    </div>
+                    <div className="feature-card">
+                        <div className="feature-icon">📊</div>
+                        <h3>Species Inventory</h3>
+                        <p>Maintain detailed registries for Australian Red Claw and other species with precise environmental data logging.</p>
+                    </div>
+                    <div className="feature-card">
+                        <div className="feature-icon">📈</div>
+                        <h3>Detailed Reports</h3>
+                        <p>Generate comprehensive reports on population growth, mortality rates, and production metrics to make data-driven decisions.</p>
+                    </div>
+                    <div className="feature-card">
+                        <div className="feature-icon">🌡️</div>
+                        <h3>Environmental Monitoring</h3>
+                        <p>Track water quality, temperature, pH levels, and other critical parameters to ensure optimal growing conditions.</p>
+                    </div>
+                    <div className="feature-card">
+                        <div className="feature-icon">🔔</div>
+                        <h3>Smart Alerts</h3>
+                        <p>Receive instant notifications about critical events like stage transitions, mortality events, and environmental warnings.</p>
+                    </div>
                 </div>
-                <div className="feature-item">
-                    <h3>Species Inventory</h3>
-                    <p>Maintain detailed registries for Australian Red Claw and other species with precise environmental logging.</p>
+            </section>
+            <section className="cta-section">
+                <div className="cta-content">
+                    <h2>Ready to Transform Your Farm?</h2>
+                    <p>Join hundreds of crayfish farmers who have streamlined their operations with our management system.</p>
+                    <Link to="/register" className="cta-button">Start Your Free Trial</Link>
                 </div>
-            </div>
-        </section>
+            </section>
+        </>
     );
 }
 

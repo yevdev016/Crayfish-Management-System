@@ -5,6 +5,7 @@ dotenv.config();
 import cors from 'cors'
 import initDatabase from './configs/initDb.js';
 import authRoutes from './routes/authRoutes.js'
+import habitatRoutes from './routes/habitatRoutes.js'
 import './configs/passport.js'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
@@ -21,7 +22,7 @@ app.use(express.json());
 app.use(passport.initialize());
 
 app.use('/api/auth', authRoutes);
-
+app.use('/api/habitats', habitatRoutes)
 app.listen(port, () => {
     console.log(`This server is running on port: ${port}`);
 });

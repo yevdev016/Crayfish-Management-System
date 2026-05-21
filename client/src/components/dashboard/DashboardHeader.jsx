@@ -1,6 +1,6 @@
 import './DashboardHeader.css'
 
-const DashboardHeader = ({ username = 'User' }) => {
+const DashboardHeader = ({ username }) => {
     return (
         <div className="dashboard-header">
             <div className="dashboard-header-left">

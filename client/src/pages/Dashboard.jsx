@@ -4,11 +4,12 @@ import HabitatOverview from '@/components/dashboard/HabitatOverview'
 import LifecycleOverview from '@/components/dashboard/LifecycleOverview'
 import RecentActivity from '@/components/dashboard/RecentActivity'
 import './Dashboard.css'
-
+import { useAuth } from '../context/AuthContext'
 const Dashboard = () => {
+    const { user } = useAuth();
     return (
         <>
-            <DashboardHeader />
+            <DashboardHeader username={user?.username}/>
             <StatsGrid />
             <div className="dashboard-body">
                 <div className="dashboard-grid">

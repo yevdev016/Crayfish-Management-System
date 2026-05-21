@@ -1,28 +1,39 @@
-import { useState } from 'react'
-
-const mockHabitats = [
-    { id: 1, name: 'Pond Alpha', image: null, species: 'Red Swamp Crayfish', count: 120, stage: 'Adult' },
-    { id: 2, name: 'Tank Beta', image: null, species: 'Signal Crayfish', count: 45, stage: 'Juvenile' },
-    { id: 3, name: 'Pond Gamma', image: null, species: 'Marbled Crayfish', count: 78, stage: 'Crayling' },
-    { id: 4, name: 'Tank Delta', image: null, species: 'Red Swamp Crayfish', count: 12, stage: 'Berried' },
-]
+import { useState, useEffect } from 'react'
+import * as habitatService from '../services/habitatServices'
 
 const useHabitats = () => {
-    const [habitats, setHabitats] = useState(mockHabitats)
+    const [ habitats, setHabitats ] = useState([])
+    const [ isLoading, setIsLoading ] = useState(true);
 
-    const addHabitat = (habitat) => {
-        setHabitats(prev => [...prev, { ...habitat, id: Date.now() }])
+    useEffect(() => {
+        const fetchHabitats = async () => {
+            try {
+                const data = await habitatService.getHabitats();
+                setHabitats(data);
+            } catch(err){
+                console.error(err)
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        fetchHabitats();
+    }, []);
+    const addHabitat = async(data) => {
+        const habitat = await habitatService.createHabitat(data);
+        setHabitats(prevData => [...prevData, habitat]);
     }
 
-    const updateHabitat = (id, data) => {
-        setHabitats(prev => prev.map(h => h.id === id ? { ...h, ...data } : h))
+    const updateHabitat = async(id, data) => {
+        const habitat = await habitatService.updateHabitat(id, data);
+        setHabitats(prevData => prevData.map(h => h.id === id ? habitat : h));
     }
 
-    const deleteHabitat = (id) => {
-        setHabitats(prev => prev.filter(h => h.id !== id))
+    const deleteHabitat = async(id) => {
+        await habitatService.deleteHabitat(id);
+        setHabitats(prevData => prevData.filter(h => h.id !== id));
     }
 
-    return { habitats, addHabitat, updateHabitat, deleteHabitat }
+    return { habitats, addHabitat, updateHabitat, deleteHabitat, isLoading }
 }
 
 export default useHabitats

@@ -13,13 +13,14 @@ import { signout } from '@/services/authServices';
 import { useAuth } from '@/context/AuthContext'
 
 const AdminNav = () => {
-    const { setIsAuthenticated } = useAuth();
+    const { setIsAuthenticated, setUser } = useAuth();
     const [expanded, setExpanded] = useState(false);
 
     const handleLogout = async () => {
         try {
             await signout();
             setIsAuthenticated(false);
+            setUser(null);
         } catch(err){
             console.log("Error setting authentication", err)
         }

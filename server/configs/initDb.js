@@ -14,7 +14,7 @@ const initDatabase = async () => {
     const createHabitatTable = `
         CREATE TABLE IF NOT EXISTS habitats (
         id SERIAL PRIMARY KEY,
-        user_id INT REFERENCES users(id) ON DELETE CASCADE,
+        user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
         name VARCHAR(50) NOT NULL,
         species VARCHAR(50) NOT NULL,
         count INT DEFAULT 0,
@@ -26,8 +26,8 @@ const initDatabase = async () => {
     const createInventoryTable = `
         CREATE TABLE IF NOT EXISTS inventory (
         id SERIAL PRIMARY KEY,
-        user_id INT REFERENCES users(id) ON DELETE CASCADE,
-        habitat VARCHAR(50) NOT NULL,
+        user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        habitat_id INT NOT NULL REFERENCES habitats(id) ON DELETE CASCADE,
         species VARCHAR(50) NOT NULL,
         stage VARCHAR(20) NOT NULL,
         count INT DEFAULT 0,
@@ -37,8 +37,8 @@ const initDatabase = async () => {
     const createLifecycleTable = `
         CREATE TABLE IF NOT EXISTS lifecycle (
         id SERIAL PRIMARY KEY,
-        user_id INT REFERENCES users(id) ON DELETE CASCADE,
-        habitat VARCHAR(50) NOT NULL,
+        user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        habitat_id INT NOT NULL REFERENCES habitats(id) ON DELETE CASCADE,
         from_stage VARCHAR(50) NOT NULL,
         to_stage VARCHAR(50) NOT NULL,
         count INT DEFAULT 0,
@@ -49,7 +49,7 @@ const initDatabase = async () => {
     const createActivitiesTable = `
         CREATE TABLE IF NOT EXISTS activities (
         id SERIAL PRIMARY KEY,
-        user_id INT REFERENCES users(id) ON DELETE CASCADE,
+        user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
         action TEXT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
         );

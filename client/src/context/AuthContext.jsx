@@ -8,6 +8,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [ user, setUser ] = useState(null);
     const [isError, setIsError] = useState('');
 
     useEffect(() => {
@@ -16,13 +17,15 @@ export const AuthProvider = ({ children }) => {
                 const response = await axios.get(`${API_URL}/auth/check-auth`, {
                     withCredentials: true,
                 });
-                console.log(response);
+                const user = response.data.username;
                 if (response.status === 200) {
                     setIsAuthenticated(true);
+                    setUser({username: user.charAt(0).toUpperCase() + user.slice(1)});
                 }
             } catch (err) {
                 console.log(err);
                 setIsAuthenticated(false);
+                setUser(null);
                 setIsError('');
             } finally {
                 setIsLoading(false);
@@ -33,7 +36,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, isLoading, isError, setIsError }}>
+        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, isLoading, isError, setIsError, setUser, user }}>
             {children}
         </AuthContext.Provider>
     );

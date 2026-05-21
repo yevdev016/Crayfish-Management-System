@@ -6,7 +6,7 @@ import { signin } from '@/services/authServices';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 const LoginForm = () => {
-    const { setIsAuthenticated, setIsError, isError } = useAuth();
+    const { setIsAuthenticated, setIsError, isError, setUser } = useAuth();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: "",
@@ -29,6 +29,7 @@ const LoginForm = () => {
             const response = await signin(formData);
             if(response.status === 200){
                 setIsAuthenticated(true);
+                setUser({username: response.data.user.username})
                 navigate('/dashboard');
             }
         } catch(err){

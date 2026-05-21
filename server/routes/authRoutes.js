@@ -20,7 +20,11 @@ router.post('/signin', authLimiter, validate(signinSchema), signinController);
 router.post('/signup', authLimiter, validate(signupSchema), signUpController);
 router.post('/signout', signoutController);
 router.get('/check-auth', passport.authenticate('jwt', {session: false}), (req, res) => {
-    res.status(200).json({message: 'Authenticated'});
+    res.status(200).json({
+        message: 'Authenticated',
+        id: req.user.id,
+        username: req.user.username
+    });
 });
 router.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 router.get('/google/callback', 

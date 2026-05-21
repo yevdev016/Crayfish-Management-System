@@ -6,7 +6,7 @@ import Button from '@/components/ui/Buttons';
 import AuthLayout from './AuthLayout';
 import { useAuth } from '@/context/AuthContext';
 const RegisterForm = () => {
-    const { setIsAuthenticated, setIsError, isError } = useAuth();
+    const { setIsAuthenticated, setIsError, isError, setUser } = useAuth();
     const navigate = useNavigate();
     const [ loading, setLoading ] = useState(false);
     const [formData, setFormData] = useState({
@@ -37,6 +37,7 @@ const RegisterForm = () => {
             const response = await signup(formData);
             if(response.status === 201){
                 setIsAuthenticated(true);
+                setUser({username: response.data.user.username});
                 navigate('/dashboard');
                 console.log('Registration Successful');
             } 
