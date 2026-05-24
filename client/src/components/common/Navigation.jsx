@@ -47,9 +47,9 @@ const AdminNav = () => {
                     <img src={habitat} alt="Habitat" />
                     <span className="nav-label">Habitats</span>
                 </Link>
-                <Link to="/inventory" className='navigation-item'>
-                    <img src={inventory} alt="Inventory" />
-                    <span className="nav-label">Inventory</span>
+                <Link to="/sales-stock" className='navigation-item'>
+                    <img src={inventory} alt="Sales Stock" />
+                    <span className="nav-label">Sales Stock</span>
                 </Link>
                 <Link to="/lifecycle" className='navigation-item'>
                     <img src={lifecycle} alt="Lifecycle" />

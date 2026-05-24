@@ -1,4 +1,4 @@
-.inventory-table-wrapper {
+.sales-stock-table-wrapper {
     margin: 0 10px;
     background-color: #fff;
     border-radius: 8px;
@@ -6,13 +6,13 @@
     overflow: hidden;
 }
 
-.inventory-table {
+.sales-stock-table {
     overflow-x: auto;
 }
 
-.inventory-table-header {
+.sales-stock-table-header {
     display: grid;
-    grid-template-columns: 1.5fr 1.5fr 1fr 1fr 120px;
+    grid-template-columns: 1.5fr 1.5fr 1fr 0.8fr 0.8fr 0.8fr 1fr 160px;
     padding: 12px 16px;
     font-size: 12px;
     font-weight: 600;
@@ -23,7 +23,7 @@
     background-color: #fafafa;
 }
 
-.inventory-empty {
+.sales-stock-empty {
     margin: 0 10px;
     padding: 40px 20px;
     background-color: #fff;
@@ -34,7 +34,7 @@
     font-size: 15px;
 }
 
-.inventory-pagination {
+.sales-stock-pagination {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -70,17 +70,24 @@
     cursor: default;
 }
 
+@media screen and (max-width: 1024px) {
+    .sales-stock-table-header {
+        grid-template-columns: 1.2fr 1.2fr 0.8fr 0.6fr 0.6fr 0.6fr 0.8fr 140px;
+    }
+}
+
 @media screen and (max-width: 768px) {
-    .inventory-table-header {
-        grid-template-columns: 1fr 1fr 0.8fr 0.8fr 100px;
+    .sales-stock-table-header {
+        grid-template-columns: 1fr 1fr 0.8fr 0.6fr 0.6fr 0.6fr 0.8fr 120px;
         padding: 10px 12px;
+        font-size: 11px;
     }
 }
 
 @media screen and (max-width: 480px) {
-    .inventory-table-header {
-        grid-template-columns: 1fr 1fr 0.8fr 0.6fr 80px;
-        font-size: 11px;
+    .sales-stock-table-header {
+        grid-template-columns: 1fr 0.8fr 0.6fr 0.5fr 0.5fr 0.5fr 0.6fr 100px;
+        font-size: 10px;
         padding: 8px 10px;
     }
 }

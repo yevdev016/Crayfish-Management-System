@@ -1,17 +1,9 @@
 import { useState, useMemo } from 'react'
 
-const mockEntries = [
-    { id: 1, habitat: 'Pond Alpha', species: 'Red Swamp Crayfish', stage: 'Adult', count: 284 },
-    { id: 2, habitat: 'Tank Beta', species: 'Signal Crayfish', stage: 'Juvenile', count: 156 },
-    { id: 3, habitat: 'Pond Gamma', species: 'Marbled Crayfish', stage: 'Crayling', count: 123 },
-    { id: 4, habitat: 'Tank Delta', species: 'Red Swamp Crayfish', stage: 'Berried', count: 101 },
-    { id: 5, habitat: 'Pond Alpha', species: 'Signal Crayfish', stage: 'Breeder', count: 63 },
-]
-
 const ITEMS_PER_PAGE = 10
 
-const useInventory = () => {
-    const [entries, setEntries] = useState(mockEntries)
+const useSalesStock = () => {
+    const [entries, setEntries] = useState([])
     const [search, setSearch] = useState('')
     const [habitatFilter, setHabitatFilter] = useState('All')
     const [currentPage, setCurrentPage] = useState(1)
@@ -39,28 +31,40 @@ const useInventory = () => {
     const occupied = entries.map(e => e.habitat)
 
     const addEntry = (data) => {
-        setEntries(prev => [...prev, { ...data, id: Date.now() }])
+        setEntries(prev => [{ ...data, id: Date.now(), status: data.stage === 'Hatchling' ? 'growing' : 'available' }, ...prev])
         setCurrentPage(1)
     }
 
     const updateEntry = (id, data) => {
-        setEntries(prev => prev.map(e => e.id === id ? { ...e, ...data } : e))
+        setEntries(prev => prev.map(e => e.id === id ? { ...e, ...data, status: data.stage === 'Hatchling' ? 'growing' : 'available' } : e))
     }
 
     const deleteEntry = (id) => {
         setEntries(prev => prev.filter(e => e.id !== id))
     }
 
+    const sellEntry = (id, customerName) => {
+        setEntries(prev => prev.map(e =>
+            e.id === id
+                ? { ...e, status: 'sold', customer_name: customerName, sold_date: new Date().toISOString().split('T')[0] }
+                : e
+        ))
+    }
+
     return {
         entries: paginated,
+        allEntries: entries,
         totalPages,
         currentPage: safePage,
         search, setSearch,
         habitatFilter, setHabitatFilter,
-        addEntry, updateEntry, deleteEntry,
+        addEntry, updateEntry, deleteEntry, sellEntry,
         occupiedHabitats: occupied,
         setCurrentPage,
+        isLoading: false,
+        fetchError: null,
+        refresh: () => {},
     }
 }
 
-export default useInventory
+export default useSalesStock

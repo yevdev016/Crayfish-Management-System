@@ -1,8 +1,8 @@
-import './InventoryToolbar.css'
+import './SalesStockToolbar.css'
 
-const InventoryToolbar = ({ search, onSearchChange, habitatFilter, onFilterChange, habitats }) => {
+const SalesStockToolbar = ({ search, onSearchChange, habitatFilter, onFilterChange, habitats }) => {
     return (
-        <div className="inventory-toolbar">
+        <div className="sales-stock-toolbar">
             <div className="toolbar-search">
                 <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="11" cy="11" r="8" />
@@ -28,4 +28,4 @@ const InventoryToolbar = ({ search, onSearchChange, habitatFilter, onFilterChang
     )
 }
 
-export default InventoryToolbar
+export default SalesStockToolbar

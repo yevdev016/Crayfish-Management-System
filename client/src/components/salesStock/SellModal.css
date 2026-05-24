@@ -1,0 +1,43 @@
+.sell-modal {
+    background: #fff;
+    border-radius: 12px;
+    padding: 28px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.sell-modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 8px;
+}
+
+.sell-modal-message {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 20px;
+    line-height: 1.5;
+}
+
+.sell-modal-message strong {
+    color: #1a1a1a;
+}
+
+.modal-btn.sell-confirm {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: #2e7d32;
+    color: #fff;
+    transition: background-color 0.2s;
+}
+
+.modal-btn.sell-confirm:hover {
+    background-color: #388e3c;
+}

@@ -63,6 +63,7 @@ const HabitatForm = ({ habitat, onSave, onCancel }) => {
                         value={habitatData.stage} 
                         onChange={e => setHabitatData(prev => ({...prev, stage: e.target.value}))} 
                         className="form-select">
+                            <option value="Hatchling">Hatchling</option>
                             <option value="Berried">Berried</option>
                             <option value="Crayling">Crayling</option>
                             <option value="Juvenile">Juvenile</option>

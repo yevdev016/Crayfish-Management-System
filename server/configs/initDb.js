@@ -23,14 +23,17 @@ const initDatabase = async () => {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
     `
-    const createInventoryTable = `
-        CREATE TABLE IF NOT EXISTS inventory (
+    const createsalesStockTable = `
+        CREATE TABLE IF NOT EXISTS sales_stock (
         id SERIAL PRIMARY KEY,
         user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
         habitat_id INT NOT NULL REFERENCES habitats(id) ON DELETE CASCADE,
-        species VARCHAR(50) NOT NULL,
-        stage VARCHAR(20) NOT NULL,
+        price DECIMAL(10,2) DEFAULT 0,
+        status TEXT,
         count INT DEFAULT 0,
+        sold_date DATE,
+        notes TEXT,
+        customer_name VARCHAR(100),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
     `
@@ -58,7 +61,7 @@ const initDatabase = async () => {
         console.log("Initializing db");
         await db.query(createUserTable);
         await db.query(createHabitatTable);
-        await db.query(createInventoryTable);
+        await db.query(createsalesStockTable);
         await db.query(createLifecycleTable);
         await db.query(createActivitiesTable);
     } catch(err) {

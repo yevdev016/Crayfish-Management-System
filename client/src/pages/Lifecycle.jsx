@@ -4,12 +4,12 @@ import LifecycleFlow from '@/components/lifecycle/LifecycleFlow'
 import TransitionForm from '@/components/lifecycle/TransitionForm'
 import useLifecycle from '@/hooks/useLifecycle'
 import useHabitats from '@/hooks/useHabitats'
-import { useInventoryData } from '@/context/InventoryContext'
+import useSalesStock from '@/hooks/useSalesStock'
 import './Lifecycle.css'
 
 const Lifecycle = () => {
     const { habitats } = useHabitats()
-    const { entries } = useInventoryData()
+    const { entries } = useSalesStock()
     const { stageTotals, transitions, addTransition } = useLifecycle(entries)
     const [showForm, setShowForm] = useState(false)
 

@@ -1,10 +1,10 @@
-import InventoryRow from './InventoryRow'
-import './InventoryTable.css'
+import SalesStockRow from './SalesStockRow'
+import './SalesStockTable.css'
 
-const InventoryTable = ({ entries, totalPages, currentPage, onPageChange, onEdit, onDelete }) => {
+const SalesStockTable = ({ entries, totalPages, currentPage, onPageChange, onEdit, onSell, onDelete }) => {
     if (entries.length === 0) {
         return (
-            <div className="inventory-empty">
+            <div className="sales-stock-empty">
                 <p>No entries found. Try adjusting your search or filters.</p>
             </div>
         )
@@ -19,20 +19,23 @@ const InventoryTable = ({ entries, totalPages, currentPage, onPageChange, onEdit
     }
 
     return (
-        <div className="inventory-table-wrapper">
-            <div className="inventory-table">
-                <div className="inventory-table-header">
+        <div className="sales-stock-table-wrapper">
+            <div className="sales-stock-table">
+                <div className="sales-stock-table-header">
                     <span>Habitat</span>
                     <span>Species</span>
                     <span>Stage</span>
-                    <span>Count</span>
+                    <span>Qty</span>
+                    <span>Price</span>
+                    <span>Status</span>
+                    <span>Sold Date</span>
                     <span>Actions</span>
                 </div>
                 {entries.map(e => (
-                    <InventoryRow key={e.id} entry={e} onEdit={onEdit} onDelete={onDelete} />
+                    <SalesStockRow key={e.id} entry={e} onEdit={onEdit} onSell={onSell} onDelete={onDelete} />
                 ))}
             </div>
-            <div className="inventory-pagination">
+            <div className="sales-stock-pagination">
                 <button className="page-btn" disabled={currentPage === 1} onClick={() => onPageChange(currentPage - 1)}>Prev</button>
                 {getPageNumbers().map(p => (
                     <button key={p} className={`page-btn ${p === currentPage ? 'active' : ''}`} onClick={() => onPageChange(p)}>{p}</button>
@@ -43,4 +46,4 @@ const InventoryTable = ({ entries, totalPages, currentPage, onPageChange, onEdit
     )
 }
 
-export default InventoryTable
+export default SalesStockTable

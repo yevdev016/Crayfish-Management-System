@@ -5,7 +5,7 @@ import Register from '@/pages/RegisterPage';
 import Login from '@/pages/LoginPage'
 import Dashboard from '@/pages/Dashboard'
 import Habitats from '@/pages/Habitats'
-import Inventory from '@/pages/Inventory'
+import SaleStock from '@/pages/SaleStock'
 import Lifecycle from '@/pages/Lifecycle'
 import Reports from '@/pages/Reports'
 import ProtectedRoute from './ProtectedRoute';
@@ -28,7 +28,7 @@ const AppRoute = () => {
                 <Route element={<MainLayout />}>
                     <Route path='/dashboard' element={<Dashboard />} />
                     <Route path='/habitats' element={<Habitats />} />
-                    <Route path='/inventory' element={<Inventory />} />
+                    <Route path='/sales-stock' element={<SaleStock />} />
                     <Route path='/lifecycle' element={<Lifecycle />} />
                     <Route path='/reports' element={<Reports />} />
                 </Route>

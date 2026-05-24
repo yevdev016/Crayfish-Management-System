@@ -3,7 +3,7 @@ import jsPDF from 'jspdf'
 import ReportsHeader from '@/components/reports/ReportsHeader'
 import ReportCard from '@/components/reports/ReportCard'
 import useHabitats from '@/hooks/useHabitats'
-import { useInventoryData } from '@/context/InventoryContext'
+import useSalesStock from '@/hooks/useSalesStock'
 import useLifecycle from '@/hooks/useLifecycle'
 import './Reports.css'
 
@@ -22,7 +22,7 @@ const stageColors = {
 
 const Reports = () => {
     const { habitats } = useHabitats()
-    const { entries } = useInventoryData()
+    const { entries } = useSalesStock()
     const { stageTotals, transitions } = useLifecycle(entries)
     const [generated, setGenerated] = useState([])
     const [loading, setLoading] = useState(null)
@@ -65,22 +65,28 @@ const Reports = () => {
     const generateInventoryReport = () => {
         const doc = new jsPDF()
         let y = 20
-        addLine(doc, 'Inventory Report', 14, y, 18, true); y += 10
+        addLine(doc, 'Sales Stock Report', 14, y, 18, true); y += 10
         addLine(doc, `Generated: ${new Date().toLocaleDateString()}`, 14, y, 10); y += 10
         doc.line(14, y, 196, y); y += 8
         addLine(doc, 'Habitat', 14, y, 10, true)
-        addLine(doc, 'Species', 70, y, 10, true)
-        addLine(doc, 'Stage', 130, y, 10, true)
-        addLine(doc, 'Count', 175, y, 10, true)
+        addLine(doc, 'Species', 65, y, 10, true)
+        addLine(doc, 'Stage', 110, y, 10, true)
+        addLine(doc, 'Qty', 135, y, 10, true)
+        addLine(doc, 'Status', 155, y, 10, true)
+        addLine(doc, 'Price', 178, y, 10, true)
         y += 6; doc.line(14, y, 196, y); y += 6
         entries.forEach(e => {
             if (y > 270) { doc.addPage(); y = 20 }
             addLine(doc, e.habitat, 14, y)
-            addLine(doc, e.species, 70, y)
+            addLine(doc, e.species, 65, y)
             doc.setTextColor(stageColors[e.stage] || '#333')
-            addLine(doc, e.stage, 130, y)
+            addLine(doc, e.stage, 110, y)
             doc.setTextColor('#004d75')
-            addLine(doc, String(e.count), 175, y)
+            addLine(doc, String(e.count), 135, y)
+            doc.setTextColor(e.status === 'sold' ? '#888' : e.status === 'available' ? '#2e7d32' : '#f57f17')
+            addLine(doc, e.status || '—', 155, y)
+            doc.setTextColor('#2e7d32')
+            addLine(doc, e.price != null ? `₱${Number(e.price).toFixed(2)}` : '—', 178, y)
             doc.setTextColor('#000')
             y += 8
         })

@@ -1,6 +1,6 @@
-.inventory-row {
+.sales-stock-row {
     display: grid;
-    grid-template-columns: 1.5fr 1.5fr 1fr 1fr 120px;
+    grid-template-columns: 1.5fr 1.5fr 1fr 0.8fr 0.8fr 0.8fr 1fr 160px;
     align-items: center;
     padding: 12px 16px;
     border-bottom: 1px solid #f0f0f0;
@@ -8,11 +8,11 @@
     font-size: 14px;
 }
 
-.inventory-row:hover {
+.sales-stock-row:hover {
     background-color: #f8f9fa;
 }
 
-.inventory-row:last-child {
+.sales-stock-row:last-child {
     border-bottom: none;
 }
 
@@ -39,6 +39,25 @@
     color: #004d75;
 }
 
+.row-price {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2e7d32;
+}
+
+.row-status-badge {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.row-sold-date {
+    font-size: 13px;
+    color: #666;
+}
+
 .row-actions {
     display: flex;
     gap: 4px;
@@ -46,13 +65,14 @@
 }
 
 .row-btn {
-    padding: 4px 12px;
+    padding: 4px 10px;
     border: none;
     border-radius: 4px;
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.2s;
+    white-space: nowrap;
 }
 
 .row-btn.edit {
@@ -64,6 +84,15 @@
     background-color: #bbdefb;
 }
 
+.row-btn.sell {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.row-btn.sell:hover {
+    background-color: #c8e6c9;
+}
+
 .row-btn.delete {
     background-color: #fce4ec;
     color: #c62828;
@@ -73,18 +102,29 @@
     background-color: #f8bbd0;
 }
 
+@media screen and (max-width: 1024px) {
+    .sales-stock-row {
+        grid-template-columns: 1.2fr 1.2fr 0.8fr 0.6fr 0.6fr 0.6fr 0.8fr 140px;
+    }
+}
+
 @media screen and (max-width: 768px) {
-    .inventory-row {
-        grid-template-columns: 1fr 1fr 0.8fr 0.8fr 100px;
+    .sales-stock-row {
+        grid-template-columns: 1fr 1fr 0.8fr 0.6fr 0.6fr 0.6fr 0.8fr 120px;
         padding: 10px 12px;
         font-size: 13px;
     }
 }
 
 @media screen and (max-width: 480px) {
-    .inventory-row {
-        grid-template-columns: 1fr 1fr 0.8fr 0.6fr 80px;
+    .sales-stock-row {
+        grid-template-columns: 1fr 0.8fr 0.6fr 0.5fr 0.5fr 0.5fr 0.6fr 100px;
         font-size: 12px;
         padding: 8px 10px;
+    }
+
+    .row-btn {
+        padding: 3px 6px;
+        font-size: 10px;
     }
 }
