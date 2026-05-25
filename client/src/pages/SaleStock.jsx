@@ -5,19 +5,25 @@ import SalesStockTable from '@/components/salesStock/SalesStockTable'
 import HarvestForm from '@/components/salesStock/HarvestForm'
 import SellModal from '@/components/salesStock/SellModal'
 import DeleteConfirm from '@/components/habitats/DeleteConfirm'
-import useSalesStock from '@/hooks/useSalesStock'
+import useSaleStock from '@/hooks/useSalesStock'
 import useHabitats from '@/hooks/useHabitats'
 
 const SaleStock = () => {
     const { habitats } = useHabitats()
-    const habitatNames = useMemo(() => habitats.map(h => ({ name: h.name, species: h.species, stage: h.stage })), [habitats])
+    const habitatNames = useMemo(() => habitats.map(h => ({ id: h.id, name: h.name, species: h.species, stage: h.stage })), [habitats])
     const habitatNameList = useMemo(() => habitatNames.map(h => h.name), [habitatNames])
     const {
-        entries, totalPages, currentPage, setCurrentPage,
-        search, setSearch, habitatFilter, setHabitatFilter,
-        addEntry, updateEntry, deleteEntry, sellEntry,
+        saleStock: entries,
+        totalPages,
+        currentPage, setCurrentPage,
+        search, setSearch,
+        habitatFilter, setHabitatFilter,
+        addSaleStock: addEntry,
+        updateSaleStock: updateEntry,
+        deleteSaleStock: deleteEntry,
+        sellSaleStock: sellEntry,
         isLoading, fetchError, refresh,
-    } = useSalesStock()
+    } = useSaleStock()
 
     const [showForm, setShowForm] = useState(false)
     const [editing, setEditing] = useState(null)
@@ -78,6 +84,29 @@ const SaleStock = () => {
                     <p>{fetchError}</p>
                     <button className="sales-stock-add-btn" style={{ marginTop: 12 }} onClick={refresh}>Retry</button>
                 </div>
+                {showForm && (
+                    <HarvestForm
+                        habitats={habitatNames}
+                        entry={editing}
+                        onSave={handleSave}
+                        onCancel={() => { setShowForm(false); setEditing(null) }}
+                    />
+                )}
+                {selling && (
+                    <SellModal
+                        entry={selling}
+                        onConfirm={handleSellConfirm}
+                        onCancel={() => setSelling(null)}
+                    />
+                )}
+                {deleting && (
+                    <DeleteConfirm
+                        item={{ id: deleting.id, name: `${deleting.habitat} - ${deleting.species}` }}
+                        title="Sales Stock Entry"
+                        onConfirm={() => handleDeleteConfirm(deleting.id)}
+                        onCancel={() => setDeleting(null)}
+                    />
+                )}
             </>
         )
     }

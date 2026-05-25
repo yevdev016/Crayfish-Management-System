@@ -1,70 +1,90 @@
-import { useState, useMemo } from 'react'
+import { useState, useEffect, useMemo } from "react";
+import * as saleStockServices from '@/services/saleStockServices'
 
-const ITEMS_PER_PAGE = 10
+const ITEM_PER_PAGE = 10;
 
-const useSalesStock = () => {
-    const [entries, setEntries] = useState([])
-    const [search, setSearch] = useState('')
-    const [habitatFilter, setHabitatFilter] = useState('All')
-    const [currentPage, setCurrentPage] = useState(1)
+const useSaleStock = () => {
+    const [ saleStock, setSaleStock ] = useState([]);
+    const [ search, setSearch ] = useState('');
+    const [ habitatFilter, setHabitatFilter ] = useState('All');
+    const [ currentPage, setCurrentPage ] = useState(1);
+    const [ isLoading, setIsLoading ] = useState(true);
+    const [ fetchError, setFetchError ] = useState(null);
 
+    useEffect(() => {
+        const getSalesStock = async () => {
+            setIsLoading(true);
+            setFetchError(null);
+            try {
+                const data = await saleStockServices.getSaleStock();
+                setSaleStock(data);
+            } catch(err){
+                setFetchError(err.message || 'Failed to load entries');
+                setSaleStock([]);
+            } finally {
+                setIsLoading(false)
+            }
+        }
+        getSalesStock()
+    }, []);
     const filtered = useMemo(() => {
-        let result = entries
-        if (search.trim()) {
-            const q = search.toLowerCase()
+        let result = saleStock;
+        if(search.trim()) {
+            const q = search.toLowerCase();
             result = result.filter(e => e.species.toLowerCase().includes(q))
         }
         if (habitatFilter !== 'All') {
             result = result.filter(e => e.habitat === habitatFilter)
         }
         return result
-    }, [entries, search, habitatFilter])
+    }, [saleStock, search, habitatFilter]);
 
-    const totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE))
+    const totalPages = Math.max(1, Math.ceil(filtered.length / ITEM_PER_PAGE))
     const safePage = Math.min(currentPage, totalPages)
-
     const paginated = useMemo(() => {
-        const start = (safePage - 1) * ITEMS_PER_PAGE
-        return filtered.slice(start, start + ITEMS_PER_PAGE)
+        const start = (safePage - 1) * ITEM_PER_PAGE
+        return filtered.slice(start, start + ITEM_PER_PAGE)
     }, [filtered, safePage])
+    const occupied = useMemo(() => saleStock.map(e => e.habitat), [saleStock]);
 
-    const occupied = entries.map(e => e.habitat)
-
-    const addEntry = (data) => {
-        setEntries(prev => [{ ...data, id: Date.now(), status: data.stage === 'Hatchling' ? 'growing' : 'available' }, ...prev])
-        setCurrentPage(1)
+    const addSaleStock = async (data)=> {
+        const saleStock = await saleStockServices.addSaleStock(data);
+        setSaleStock(prevData => [saleStock, ...prevData]);
+        setCurrentPage(1);
     }
-
-    const updateEntry = (id, data) => {
-        setEntries(prev => prev.map(e => e.id === id ? { ...e, ...data, status: data.stage === 'Hatchling' ? 'growing' : 'available' } : e))
+    const updateSaleStock = async (id, data) => {
+        const updatedSaleStock = await saleStockServices.updateSaleStock(id, data);
+        setSaleStock(prevData => prevData.map(s => s.id === id ? updatedSaleStock : s));
     }
-
-    const deleteEntry = (id) => {
-        setEntries(prev => prev.filter(e => e.id !== id))
+    const deleteSaleStock = async (id) => {
+        await saleStockServices.deleteStock(id);
+        setSaleStock(prevData => prevData.filter(s => s.id !== id))
     }
-
-    const sellEntry = (id, customerName) => {
-        setEntries(prev => prev.map(e =>
-            e.id === id
-                ? { ...e, status: 'sold', customer_name: customerName, sold_date: new Date().toISOString().split('T')[0] }
-                : e
-        ))
+    const sellSaleStock = async (id, customerName) => {
+        const sellStock = await saleStockServices.sellStock(id, customerName);
+        setSaleStock(prevData => prevData.map(s => s.id === id ? sellStock : s));
     }
-
     return {
-        entries: paginated,
-        allEntries: entries,
+        saleStock: paginated,
+        allSaleStock: saleStock,
         totalPages,
         currentPage: safePage,
         search, setSearch,
         habitatFilter, setHabitatFilter,
-        addEntry, updateEntry, deleteEntry, sellEntry,
+        addSaleStock, updateSaleStock, deleteSaleStock, sellSaleStock,
         occupiedHabitats: occupied,
         setCurrentPage,
-        isLoading: false,
-        fetchError: null,
-        refresh: () => {},
+        isLoading,
+        fetchError,
+        refresh: async () => {
+            try {
+                const data = await saleStockServices.getSaleStock();
+                setSaleStock(data);
+            } catch(err) {
+                setFetchError(err.message || 'Failed to load entries');
+            }
+        },
     }
-}
 
-export default useSalesStock
+}
+export default useSaleStock

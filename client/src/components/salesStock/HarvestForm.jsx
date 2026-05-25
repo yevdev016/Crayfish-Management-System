@@ -15,9 +15,7 @@ const HarvestForm = ({ habitats, entry, onSave, onCancel }) => {
         if (!selectedHabitat || !harvestData.count) return
             const found = habitats.find(h => h.name === selectedHabitat)
             onSave({
-                habitat: selectedHabitat,
-                species: found?.species || 'Unknown',
-                stage: found?.stage || 'Adult',
+                habitat_id: found?.id,
                 count: Number(harvestData.count),
                 price: harvestData.price ? Number(harvestData.price) : 0,
                 notes: harvestData.notes.trim() || null,

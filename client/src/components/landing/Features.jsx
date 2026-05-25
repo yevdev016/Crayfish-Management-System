@@ -29,16 +29,6 @@ const Features = () => {
                         <h3>Detailed Reports</h3>
                         <p>Generate comprehensive reports on population growth, mortality rates, and production metrics to make data-driven decisions.</p>
                     </div>
-                    <div className="feature-card">
-                        <div className="feature-icon">🌡️</div>
-                        <h3>Environmental Monitoring</h3>
-                        <p>Track water quality, temperature, pH levels, and other critical parameters to ensure optimal growing conditions.</p>
-                    </div>
-                    <div className="feature-card">
-                        <div className="feature-icon">🔔</div>
-                        <h3>Smart Alerts</h3>
-                        <p>Receive instant notifications about critical events like stage transitions, mortality events, and environmental warnings.</p>
-                    </div>
                 </div>
             </section>
             <section className="cta-section">
