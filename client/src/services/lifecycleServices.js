@@ -20,3 +20,23 @@ export const addLifecycle = async (data) => {
         throw err
     }
 }
+
+export const updateLifecycle = async (id, data) => {
+    try {
+        const res = await axios.put(`${API_URL}/lifecycle/${id}`, data, { withCredentials: true })
+        return res.data
+    } catch (err) {
+        console.error(err)
+        throw err
+    }
+}
+
+export const deleteLifecycle = async (id) => {
+    try {
+        const res = await axios.delete(`${API_URL}/lifecycle/${id}`, { withCredentials: true })
+        return res.data
+    } catch (err) {
+        console.error(err)
+        throw err
+    }
+}

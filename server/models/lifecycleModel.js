@@ -74,3 +74,48 @@ export const createLifecycle = async (userId, data) => {
         client.release();
     }
 }
+
+export const updateLifecycle = async (id, userId, data) => {
+    const client = await db.connect();
+    try {
+        await client.query('BEGIN');
+
+        const existing = await client.query(
+            `SELECT id FROM lifecycle WHERE id = $1 AND user_id = $2 FOR UPDATE`,
+            [id, userId]
+        );
+        if (!existing.rows[0]) {
+            await client.query('ROLLBACK');
+            return null;
+        }
+
+        const updated = await client.query(
+            `UPDATE lifecycle SET count = $1, date = $2 WHERE id = $3 AND user_id = $4 RETURNING *`,
+            [data.count, data.date, id, userId]
+        );
+
+        await client.query('COMMIT');
+
+        const fullQuery = `
+        SELECT lifecycle.*, habitats.name AS habitat, habitats.species AS species
+        FROM lifecycle
+        JOIN habitats ON lifecycle.habitat_id = habitats.id
+        WHERE lifecycle.id = $1
+        `
+        const fullResult = await db.query(fullQuery, [id]);
+        return fullResult.rows[0];
+    } catch (err) {
+        await client.query('ROLLBACK');
+        throw err;
+    } finally {
+        client.release();
+    }
+}
+
+export const deleteLifecycle = async (id, userId) => {
+    const query = `
+    DELETE FROM lifecycle WHERE id = $1 AND user_id = $2 RETURNING *;
+    `
+    const res = await db.query(query, [id, userId])
+    return res.rows[0] || null
+}

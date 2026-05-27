@@ -22,15 +22,28 @@ const HabitatForm = ({ habitat, onSave, onCancel }) => {
         }
     }
 
-    const handleSubmit = (e) => {
+    const fileToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader()
+            reader.onload = () => resolve(reader.result)
+            reader.onerror = reject
+            reader.readAsDataURL(file)
+        })
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
         if (!habitatData.name.trim() || !habitatData.species.trim() || !habitatData.count) return
+        let imageValue = habitatData.image
+        if (imageValue instanceof File) {
+            imageValue = await fileToBase64(imageValue)
+        }
         onSave({ 
             name: habitatData.name.trim(), 
             species: habitatData.species.trim(), 
             count: Number(habitatData.count), 
             stage: habitatData.stage || 'Adult', 
-            image: habitatData.image 
+            image: imageValue 
         })
     }
 
@@ -63,7 +76,6 @@ const HabitatForm = ({ habitat, onSave, onCancel }) => {
                         value={habitatData.stage} 
                         onChange={e => setHabitatData(prev => ({...prev, stage: e.target.value}))} 
                         className="form-select">
-                            <option value="Hatchling">Hatchling</option>
                             <option value="Berried">Berried</option>
                             <option value="Crayling">Crayling</option>
                             <option value="Juvenile">Juvenile</option>

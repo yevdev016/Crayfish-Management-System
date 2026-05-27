@@ -8,6 +8,7 @@ import authRoutes from './routes/authRoutes.js'
 import habitatRoutes from './routes/habitatRoutes.js'
 import saleStockRoutes from './routes/saleStockRoutes.js'
 import lifecycleRoutes from './routes/lifecycleRoutes.js'
+import activityRoutes from './routes/activityRoutes.js'
 import './configs/passport.js'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
@@ -27,6 +28,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/habitats', habitatRoutes)
 app.use('/api/sales-stock', saleStockRoutes);
 app.use('/api/lifecycle', lifecycleRoutes);
+app.use('/api/activities', activityRoutes);
 app.listen(port, () => {
     console.log(`This server is running on port: ${port}`);
 });

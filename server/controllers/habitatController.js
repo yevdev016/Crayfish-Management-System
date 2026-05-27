@@ -1,4 +1,5 @@
 import * as habitatModel from '../models/habitatModel.js'
+import { createActivity } from '../models/activityModel.js'
 
 export const getHabitats = async (req, res) => {
     try {
@@ -26,6 +27,7 @@ export const createHabitat = async(req, res) => {
         const habitat = await habitatModel.createHabitat(
             req.user.id, name, species, count, stage, image
         );
+        await createActivity(req.user.id, `Created habitat "${name}"`);
         res.status(201).json(habitat);
     } catch(err){
         res.status(400).json({message: err.message})
@@ -39,6 +41,7 @@ export const updateHabitat = async (req, res) => {
         if(!habitat) {
             return res.status(404).json({message: 'Habitat not found'});
         }
+        await createActivity(req.user.id, `Updated habitat "${habitat.name}"`);
         res.status(200).json(habitat)
     } catch(err){
         return res.status(400).json({message: err.message})
@@ -50,6 +53,7 @@ export const deleteHabitat = async (req, res) => {
         if(!habitat){
             return res.status(404).json({message: 'Habitat not found.'})
         }
+        await createActivity(req.user.id, 'Deleted a habitat');
         res.status(200).json({message: 'Habitat deleted successfully'});
     } catch(err){
         res.status(500).json({message: err.message})

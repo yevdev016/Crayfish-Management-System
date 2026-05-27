@@ -38,7 +38,17 @@ const useLifecycle = (habitats) => {
         setTransitions(prev => [transition, ...prev])
     }
 
-    return { stageTotals, transitions, addTransition, stages, isLoading }
+    const updateTransition = async (id, data) => {
+        const updated = await lifecycleServices.updateLifecycle(id, data)
+        setTransitions(prev => prev.map(t => t.id === id ? updated : t))
+    }
+
+    const deleteTransition = async (id) => {
+        await lifecycleServices.deleteLifecycle(id)
+        setTransitions(prev => prev.filter(t => t.id !== id))
+    }
+
+    return { stageTotals, transitions, addTransition, updateTransition, deleteTransition, stages, isLoading }
 }
 
 export default useLifecycle

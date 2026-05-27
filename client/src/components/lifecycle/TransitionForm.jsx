@@ -4,29 +4,42 @@ import './TransitionForm.css'
 const stages = ['Berried', 'Crayling', 'Juvenile', 'Adult', 'Breeder']
 const today = () => new Date().toISOString().split('T')[0]
 
-const TransitionForm = ({ habitats, onSave, onCancel }) => {
-    const [habitat, setHabitat] = useState(habitats[0] || '')
-    const [fromStage, setFromStage] = useState(stages[0])
-    const [toStage, setToStage] = useState(stages[1])
-    const [count, setCount] = useState('')
-    const [date, setDate] = useState(today())
+const TransitionForm = ({ habitats, habitatStageMap = {}, transition, onSave, onCancel }) => {
+    const isEdit = !!transition
+    const firstStage = habitats[0] ? (habitatStageMap[habitats[0]] || stages[0]) : stages[0]
+    const [habitat, setHabitat] = useState(transition?.habitat || habitats[0] || '')
+    const [fromStage, setFromStage] = useState(transition?.from_stage || firstStage)
+    const [toStage, setToStage] = useState(transition?.to_stage || stages[1])
+    const [count, setCount] = useState(transition?.count || '')
+    const [date, setDate] = useState(transition?.date || today())
 
     const isSameStage = fromStage === toStage
 
+    const handleHabitatChange = (name) => {
+        setHabitat(name)
+        const stage = habitatStageMap[name]
+        if (stage) {
+            setFromStage(stage)
+            if (stage === toStage) {
+                setToStage(stages.find(s => s !== stage) || stages[1])
+            }
+        }
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (!habitat || isSameStage || !count) return
+        if (!habitat || (!isEdit && isSameStage) || !count) return
         onSave({ habitat, fromStage, toStage, count: Number(count), date })
     }
 
     return (
         <div className="modal-overlay" onClick={onCancel}>
             <div className="modal-content" onClick={e => e.stopPropagation()}>
-                <h2 className="modal-title">Record Stage Transition</h2>
+                <h2 className="modal-title">{isEdit ? 'Edit Transition' : 'Record Stage Transition'}</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label>Habitat</label>
-                        <select value={habitat} onChange={e => setHabitat(e.target.value)} required>
+                        <select value={habitat} onChange={e => handleHabitatChange(e.target.value)} required disabled={isEdit}>
                             {habitats.map(h => (
                                 <option key={h} value={h}>{h}</option>
                             ))}
@@ -35,7 +48,7 @@ const TransitionForm = ({ habitats, onSave, onCancel }) => {
                     <div className="form-row">
                         <div className="form-group">
                             <label>From Stage</label>
-                            <select value={fromStage} onChange={e => setFromStage(e.target.value)}>
+                            <select value={fromStage} onChange={e => setFromStage(e.target.value)} disabled={isEdit}>
                                 {stages.map(s => (
                                     <option key={s} value={s}>{s}</option>
                                 ))}
@@ -48,14 +61,14 @@ const TransitionForm = ({ habitats, onSave, onCancel }) => {
                         </div>
                         <div className="form-group">
                             <label>To Stage</label>
-                            <select value={toStage} onChange={e => setToStage(e.target.value)}>
+                            <select value={toStage} onChange={e => setToStage(e.target.value)} disabled={isEdit}>
                                 {stages.map(s => (
                                     <option key={s} value={s}>{s}</option>
                                 ))}
                             </select>
                         </div>
                     </div>
-                    {isSameStage && (
+                    {isSameStage && !isEdit && (
                         <p className="form-warning">From and To stages must be different.</p>
                     )}
                     <div className="form-group">
@@ -68,7 +81,7 @@ const TransitionForm = ({ habitats, onSave, onCancel }) => {
                     </div>
                     <div className="form-actions">
                         <button type="button" className="modal-btn cancel" onClick={onCancel}>Cancel</button>
-                        <button type="submit" className="modal-btn save" disabled={isSameStage}>Record Transition</button>
+                        <button type="submit" className="modal-btn save" disabled={isSameStage && !isEdit}>{isEdit ? 'Save Changes' : 'Record Transition'}</button>
                     </div>
                 </form>
             </div>

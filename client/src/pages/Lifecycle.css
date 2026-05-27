@@ -8,13 +8,35 @@
 
 .lifecycle-history-header {
     padding: 16px 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
 .lifecycle-history-header h2 {
     font-size: 16px;
     font-weight: 600;
     color: #1e293b;
-    margin: 0 0 16px;
+    margin: 0;
+}
+
+.lifecycle-search {
+    padding: 6px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #334155;
+    background: #fff;
+    outline: none;
+    width: 220px;
+    transition: border-color 0.15s;
+}
+
+.lifecycle-search:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
 }
 
 .lifecycle-empty {
@@ -32,7 +54,7 @@
 
 .lifecycle-table-header {
     display: grid;
-    grid-template-columns: 1.5fr 0.8fr 40px 0.8fr 0.8fr 1fr;
+    grid-template-columns: 1.5fr 0.8fr 40px 0.8fr 0.8fr 1fr 1fr;
     padding: 10px 20px;
     font-size: 11px;
     font-weight: 600;
@@ -45,7 +67,7 @@
 
 .lifecycle-table-row {
     display: grid;
-    grid-template-columns: 1.5fr 0.8fr 40px 0.8fr 0.8fr 1fr;
+    grid-template-columns: 1.5fr 0.8fr 40px 0.8fr 0.8fr 1fr 1fr;
     align-items: center;
     padding: 10px 20px;
     border-bottom: 1px solid #f1f5f9;
@@ -98,6 +120,39 @@
     font-size: 13px;
 }
 
+.actions-cell {
+    display: flex;
+    gap: 6px;
+}
+
+.lifecycle-action-btn {
+    padding: 4px 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.lifecycle-action-btn.edit {
+    background-color: #e0e7ff;
+    color: #4338ca;
+}
+
+.lifecycle-action-btn.edit:hover {
+    background-color: #c7d2fe;
+}
+
+.lifecycle-action-btn.delete {
+    background-color: #fce4ec;
+    color: #c62828;
+}
+
+.lifecycle-action-btn.delete:hover {
+    background-color: #f8b4c8;
+}
+
 @media screen and (max-width: 768px) {
     .lifecycle-history {
         margin: 0 16px 16px;
@@ -105,7 +160,7 @@
 
     .lifecycle-table-header,
     .lifecycle-table-row {
-        grid-template-columns: 1fr 0.7fr 30px 0.7fr 0.6fr 0.8fr;
+        grid-template-columns: 1fr 0.7fr 30px 0.7fr 0.6fr 0.8fr 0.9fr;
         padding: 8px 12px;
         font-size: 12px;
     }

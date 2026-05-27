@@ -23,8 +23,8 @@ const HabitatCard = ({ habitat, onEdit, onDelete }) => {
     return (
         <div className="habitat-card">
             <div className="habitat-card-image">
-                {image ? (
-                    <img src={URL.createObjectURL(image)} alt={name} />
+                {image && typeof image === 'string' ? (
+                    <img src={image} alt={name} />
                 ) : (
                     <div className="habitat-card-placeholder">
                         {PlaceholderIcon}
