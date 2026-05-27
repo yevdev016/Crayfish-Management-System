@@ -25,32 +25,32 @@
 .input-wrapper input {
     flex: 1;
     padding: 10px 14px;
-    border: 1px solid #d1d5db;
+    border: 1px solid #e2e8f0;
     border-radius: 8px;
     font-size: 1rem;
-    color: #111827;
-    background-color: #f9fafb;
+    color: #334155;
+    background-color: #f8fafc;
     transition: all 0.2s ease;
     box-sizing: border-box;
 }
 
 .input-wrapper input:hover {
-    border-color: #9ca3af;
+    border-color: #cbd5e1;
 }
 
 .input-wrapper input:focus {
     outline: none;
     background-color: #ffffff;
     border-color: #2563eb;
-    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .input-wrapper input::placeholder {
-    color: #9ca3af;
+    color: #94a3b8;
     font-size: 0.95rem;
 }
 
 .input-wrapper input:invalid:not(:placeholder-shown) {
-    border-color: #ef4444;
+    border-color: #dc2626;
     background-color: #fef2f2;
 }

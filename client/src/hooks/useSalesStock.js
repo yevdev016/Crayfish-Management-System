@@ -60,8 +60,9 @@ const useSaleStock = () => {
         await saleStockServices.deleteStock(id);
         setSaleStock(prevData => prevData.filter(s => s.id !== id))
     }
-    const sellSaleStock = async (id, customerName) => {
-        const sellStock = await saleStockServices.sellStock(id, customerName);
+    const sellSaleStock = async (id, customerName, qty) => {
+        const sellStock = await saleStockServices.sellStock(id, customerName, qty);
+        if (!sellStock) throw new Error('Insufficient available stock');
         setSaleStock(prevData => prevData.map(s => s.id === id ? sellStock : s));
     }
     return {

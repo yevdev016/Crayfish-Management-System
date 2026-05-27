@@ -6,7 +6,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    padding: 0 16px;
+    padding: 0 20px;
 }
 
 .lifecycle-item {
@@ -14,13 +14,13 @@
     align-items: center;
     gap: 12px;
     padding: 10px 12px;
-    background-color: #f8f9fa;
+    background-color: #f8fafc;
     border-radius: 8px;
     transition: background-color 0.2s;
 }
 
 .lifecycle-item:hover {
-    background-color: #f0f1f3;
+    background-color: #f1f5f9;
 }
 
 .lifecycle-icon {
@@ -47,13 +47,13 @@
 .lifecycle-value {
     font-size: 17px;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #1e293b;
     line-height: 1.2;
 }
 
 .lifecycle-label {
     font-size: 12px;
-    color: #888;
+    color: #94a3b8;
     font-weight: 500;
 }
 

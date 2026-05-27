@@ -10,21 +10,21 @@
 .habitat-table-header {
     display: grid;
     grid-template-columns: 1.5fr 1fr 0.8fr 0.6fr;
-    padding: 10px 16px;
+    padding: 10px 20px;
     font-size: 11px;
     font-weight: 600;
-    color: #888;
+    color: #94a3b8;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid #f1f5f9;
 }
 
 .habitat-table-row {
     display: grid;
     grid-template-columns: 1.5fr 1fr 0.8fr 0.6fr;
     align-items: center;
-    padding: 10px 16px;
-    border-bottom: 1px solid #f0f0f0;
+    padding: 10px 20px;
+    border-bottom: 1px solid #f1f5f9;
     transition: background-color 0.2s;
 }
 
@@ -33,7 +33,7 @@
 }
 
 .habitat-table-row:hover {
-    background-color: #f8f9fa;
+    background-color: #f8fafc;
 }
 
 .col-habitat {
@@ -41,7 +41,7 @@
     align-items: center;
     gap: 8px;
     font-weight: 500;
-    color: #1a1a1a;
+    color: #1e293b;
     font-size: 13px;
 }
 
@@ -51,9 +51,9 @@
     justify-content: center;
     width: 26px;
     height: 26px;
-    background-color: #e8f0fe;
+    background-color: #eff6ff;
     border-radius: 6px;
-    color: #004d75;
+    color: #2563eb;
     flex-shrink: 0;
 }
 
@@ -63,7 +63,7 @@
 }
 
 .col-species {
-    color: #555;
+    color: #64748b;
     font-size: 12px;
 }
 
@@ -81,29 +81,29 @@
 }
 
 .stage-adult {
-    background-color: #e8f5e9;
-    color: #2e7d32;
+    background-color: #f0fdf4;
+    color: #16a34a;
 }
 
 .stage-juvenile {
-    background-color: #e3f2fd;
-    color: #1565c0;
+    background-color: #eff6ff;
+    color: #2563eb;
 }
 
 .stage-crayling {
-    background-color: #fce4ec;
-    color: #c62828;
+    background-color: #fef2f2;
+    color: #dc2626;
 }
 
 .stage-berried {
-    background-color: #fff3e0;
-    color: #e65100;
+    background-color: #fff7ed;
+    color: #ea580c;
 }
 
 .col-count {
     font-size: 16px;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #1e293b;
     text-align: right;
 }
 
@@ -121,7 +121,7 @@
 @media screen and (max-width: 480px) {
     .habitat-table-header,
     .habitat-table-row {
-        padding: 8px 12px;
+        padding: 8px 16px;
     }
 
     .col-habitat {

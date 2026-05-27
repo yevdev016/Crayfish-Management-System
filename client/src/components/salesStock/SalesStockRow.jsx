@@ -22,12 +22,15 @@ const SalesStockRow = ({ entry, onEdit, onSell, onDelete }) => {
 
     return (
         <div className="sales-stock-row">
-            <span className="row-habitat">{entry.habitat}</span>
+            <span className="row-habitat">
+                {entry.habitat}
+                {entry.notes && <span className="notes-tip" data-tip={entry.notes}>i</span>}
+            </span>
             <span className="row-species">{entry.species}</span>
             <span className="row-stage">
                 <span className="row-badge" style={{ backgroundColor: s.bg, color: s.color }}>{entry.stage}</span>
             </span>
-            <span className="row-count">{entry.count}</span>
+            <span className="row-count">{entry.available}</span>
             <span className="row-price">{formattedPrice}</span>
             <span className="row-status">
                 <span className="row-status-badge" style={{ backgroundColor: st.bg, color: st.color }}>{st.label}</span>

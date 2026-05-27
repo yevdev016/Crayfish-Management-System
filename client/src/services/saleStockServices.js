@@ -29,9 +29,9 @@ export const updateSaleStock = async (id, data) => {
         throw err
     }
 }
-export const sellStock = async (id, customerName) => {
+export const sellStock = async (id, customerName, qty) => {
     try {
-        const res = await axios.patch(`${API_URL}/sales-stock/${id}`, {customer_name: customerName}, {withCredentials: true})
+        const res = await axios.patch(`${API_URL}/sales-stock/${id}`, {customer_name: customerName, qty: qty}, {withCredentials: true})
         return res.data
     }catch (err){
         console.error(err)

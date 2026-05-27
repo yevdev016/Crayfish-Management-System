@@ -33,7 +33,16 @@ const useHabitats = () => {
         setHabitats(prevData => prevData.filter(h => h.id !== id));
     }
 
-    return { habitats, addHabitat, updateHabitat, deleteHabitat, isLoading }
+    const refresh = async () => {
+        try {
+            const data = await habitatService.getHabitats();
+            setHabitats(data);
+        } catch(err){
+            console.error(err)
+        }
+    }
+
+    return { habitats, addHabitat, updateHabitat, deleteHabitat, isLoading, refresh }
 }
 
 export default useHabitats

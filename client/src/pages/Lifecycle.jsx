@@ -4,16 +4,30 @@ import LifecycleFlow from '@/components/lifecycle/LifecycleFlow'
 import TransitionForm from '@/components/lifecycle/TransitionForm'
 import useLifecycle from '@/hooks/useLifecycle'
 import useHabitats from '@/hooks/useHabitats'
-import useSalesStock from '@/hooks/useSalesStock'
 import './Lifecycle.css'
 
 const Lifecycle = () => {
     const { habitats } = useHabitats()
-    const { entries } = useSalesStock()
-    const { stageTotals, transitions, addTransition } = useLifecycle(entries)
+    const { stageTotals, transitions, addTransition } = useLifecycle(habitats)
     const [showForm, setShowForm] = useState(false)
 
     const habitatNames = habitats.map(h => h.name)
+
+    const handleSave = async (data) => {
+        const found = habitats.find(h => h.name === data.habitat)
+        if (!found) {
+            alert('Selected habitat not found. Please refresh and try again.')
+            return
+        }
+        await addTransition({
+            habitat_id: found.id,
+            from_stage: data.fromStage,
+            to_stage: data.toStage,
+            count: data.count,
+            date: data.date,
+        })
+        setShowForm(false)
+    }
 
     return (
         <>
@@ -40,13 +54,13 @@ const Lifecycle = () => {
                         {transitions.map(t => (
                             <div key={t.id} className="lifecycle-table-row">
                                 <span>{t.habitat}</span>
-                                <span className="from-stage">{t.fromStage}</span>
+                                <span className="from-stage">{t.from_stage}</span>
                                 <span className="arrow-cell">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="#aaa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                         <polyline points="9 18 15 12 9 6" />
                                     </svg>
                                 </span>
-                                <span className="to-stage">{t.toStage}</span>
+                                <span className="to-stage">{t.to_stage}</span>
                                 <span className="count-cell">{t.count}</span>
                                 <span className="date-cell">{t.date}</span>
                             </div>
@@ -58,7 +72,7 @@ const Lifecycle = () => {
             {showForm && (
                 <TransitionForm
                     habitats={habitatNames}
-                    onSave={(data) => { addTransition(data); setShowForm(false) }}
+                    onSave={handleSave}
                     onCancel={() => setShowForm(false)}
                 />
             )}

@@ -3,11 +3,10 @@
     align-items: center;
     justify-content: space-between;
     padding: 20px 24px;
-    margin: 0 10px 20px;
+    margin: 24px 24px 20px;
     background-color: #fff;
-    border-left: 4px solid #004d75;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .dashboard-header-left {
@@ -17,16 +16,17 @@
 }
 
 .dashboard-title {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #1e293b;
     margin: 0;
+    letter-spacing: -0.02em;
     line-height: 1.2;
 }
 
 .dashboard-subtitle {
-    font-size: 15px;
-    color: #888;
+    font-size: 14px;
+    color: #94a3b8;
     margin: 0;
     line-height: 1.4;
 }
@@ -37,15 +37,15 @@
 }
 
 .dashboard-welcome {
-    font-size: 16px;
-    color: #555;
+    font-size: 15px;
+    color: #64748b;
     margin: 0;
     font-weight: 500;
     white-space: nowrap;
 }
 
 .dashboard-username {
-    color: #004d75;
+    color: #2563eb;
     font-weight: 600;
 }
 
@@ -55,7 +55,7 @@
         align-items: flex-start;
         gap: 12px;
         padding: 16px;
-        margin-bottom: 16px;
+        margin: 16px 16px 16px;
     }
 
     .dashboard-title {
@@ -63,11 +63,11 @@
     }
 
     .dashboard-subtitle {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .dashboard-welcome {
-        font-size: 15px;
+        font-size: 14px;
     }
 }
 
@@ -77,10 +77,6 @@
     }
 
     .dashboard-subtitle {
-        font-size: 13px;
-    }
-
-    .dashboard-welcome {
-        font-size: 14px;
+        font-size: 12px;
     }
 }

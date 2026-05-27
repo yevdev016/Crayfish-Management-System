@@ -15,8 +15,8 @@
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background-color: #fce4ec;
-    color: #c62828;
+    background-color: #fef2f2;
+    color: #dc2626;
     margin-bottom: 16px;
 }
 
@@ -28,19 +28,19 @@
 .delete-title {
     font-size: 18px;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #1e293b;
     margin: 0 0 8px;
 }
 
 .delete-message {
     font-size: 14px;
-    color: #666;
+    color: #64748b;
     margin: 0 0 24px;
     line-height: 1.5;
 }
 
 .delete-message strong {
-    color: #1a1a1a;
+    color: #1e293b;
 }
 
 .delete-actions {
@@ -52,32 +52,32 @@
     flex: 1;
     padding: 10px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    background-color: #f0f0f0;
-    color: #555;
+    background-color: #f1f5f9;
+    color: #64748b;
     transition: background-color 0.2s;
 }
 
 .modal-btn.cancel:hover {
-    background-color: #e0e0e0;
+    background-color: #e2e8f0;
 }
 
 .modal-btn.delete-btn {
     flex: 1;
     padding: 10px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    background-color: #c62828;
+    background-color: #dc2626;
     color: #fff;
     transition: background-color 0.2s;
 }
 
 .modal-btn.delete-btn:hover {
-    background-color: #e53935;
+    background-color: #b91c1c;
 }

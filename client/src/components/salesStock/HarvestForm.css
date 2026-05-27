@@ -1,17 +1,28 @@
 .form-group textarea {
     width: 100%;
     padding: 10px 12px;
-    border: 1px solid #d0d0d0;
-    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
     font-size: 14px;
-    color: #333;
+    color: #334155;
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
     box-sizing: border-box;
     font-family: inherit;
     resize: vertical;
+    background-color: #f8fafc;
 }
 
 .form-group textarea:focus {
-    border-color: #004d75;
+    border-color: #2563eb;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-group textarea::placeholder {
+    color: #94a3b8;
+}
+.modal-btn.save:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }

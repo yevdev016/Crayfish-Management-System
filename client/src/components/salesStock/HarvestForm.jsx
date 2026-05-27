@@ -3,13 +3,17 @@ import './HarvestForm.css'
 
 const HarvestForm = ({ habitats, entry, onSave, onCancel }) => {
     const isEdit = !!entry
-    const [selectedHabitat, setSelectedHabitat] = useState(typeof entry?.habitat === 'string' ? entry.habitat : (habitats[0]?.name || ''))
+    const [selectedHabitat, setSelectedHabitat] = useState(typeof entry?.habitat === 'string' ? entry.habitat : (habitats[0]?.name || ''));
+    const habitatFound = habitats.find(h => h.name === selectedHabitat);
+    const habitatCount = habitatFound?.count ?? 0;
     const [harvestData, setHarvestData] = useState({
         count: entry?.count ?? '',
         price: entry?.price ?? '',
-        notes: entry?.notes || ''
+        notes: entry?.notes || '',
     });
-
+    const isOverlimit = isEdit
+        ? Number(harvestData.count) - Number(entry?.count || 0) > habitatCount
+        : Number(harvestData.count) > habitatCount;
     const handleSubmit = (e) => {
         e.preventDefault()
         if (!selectedHabitat || !harvestData.count) return
@@ -39,7 +43,8 @@ const HarvestForm = ({ habitats, entry, onSave, onCancel }) => {
                     </div>
                     <div className="form-group">
                         <label>Quantity</label>
-                        <input type="number" value={harvestData.count} onChange={e => setHarvestData(prevData => ({...prevData, count: e.target.value}))} placeholder="e.g. 50" min="0" required />
+                        <input type="number" value={harvestData.count} onChange={e => setHarvestData(prevData => ({...prevData, count: e.target.value}))} placeholder={'Available: ' + habitatCount} required />
+                        <p className='error'>{isOverlimit ? `Only ${habitatCount} Crayfish available in this habitat` : ''}</p>
                     </div>
                     <div className="form-group">
                         <label>Price (₱)</label>
@@ -51,7 +56,7 @@ const HarvestForm = ({ habitats, entry, onSave, onCancel }) => {
                     </div>
                     <div className="form-actions">
                         <button type="button" className="modal-btn cancel" onClick={onCancel}>Cancel</button>
-                        <button type="submit" className="modal-btn save">{isEdit ? 'Save Changes' : 'Harvest'}</button>
+                        <button disabled={isOverlimit} type="submit" className="modal-btn save">{isEdit ? 'Save Changes' : 'Harvest'} </button>
                     </div>
                 </form>
             </div>

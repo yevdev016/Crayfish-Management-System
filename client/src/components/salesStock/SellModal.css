@@ -7,37 +7,81 @@
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
+.sell-modal .form-group {
+    margin-bottom: 16px;
+}
+
+.sell-modal .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 6px;
+}
+
+.sell-modal .form-group input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.sell-modal .form-group input:focus {
+    border-color: #2563eb;
+}
+
+.sell-modal .form-group small {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #64748b;
+}
+
 .sell-modal-title {
     font-size: 20px;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #1e293b;
     margin: 0 0 8px;
 }
 
 .sell-modal-message {
     font-size: 14px;
-    color: #666;
+    color: #64748b;
     margin: 0 0 20px;
     line-height: 1.5;
 }
 
 .sell-modal-message strong {
-    color: #1a1a1a;
+    color: #1e293b;
 }
 
 .modal-btn.sell-confirm {
     flex: 1;
     padding: 10px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    background-color: #2e7d32;
+    background-color: #16a34a;
     color: #fff;
     transition: background-color 0.2s;
 }
 
 .modal-btn.sell-confirm:hover {
-    background-color: #388e3c;
+    background-color: #15803d;
+}
+
+.sell-modal-error {
+    margin: 0 0 12px;
+    padding: 8px 12px;
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    font-size: 13px;
 }

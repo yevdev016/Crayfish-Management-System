@@ -9,8 +9,8 @@ import useSaleStock from '@/hooks/useSalesStock'
 import useHabitats from '@/hooks/useHabitats'
 
 const SaleStock = () => {
-    const { habitats } = useHabitats()
-    const habitatNames = useMemo(() => habitats.map(h => ({ id: h.id, name: h.name, species: h.species, stage: h.stage })), [habitats])
+    const { habitats, refresh: refreshHabitats } = useHabitats()
+    const habitatNames = useMemo(() => habitats.map(h => ({ id: h.id, name: h.name, species: h.species, stage: h.stage, count: h.count })), [habitats])
     const habitatNameList = useMemo(() => habitatNames.map(h => h.name), [habitatNames])
     const {
         saleStock: entries,
@@ -44,6 +44,7 @@ const SaleStock = () => {
             }
             setShowForm(false)
             setEditing(null)
+            refreshHabitats()
         } catch (err) {
             console.error('Save failed', err)
         }
@@ -53,18 +54,15 @@ const SaleStock = () => {
         try {
             await deleteEntry(id)
             setDeleting(null)
+            refreshHabitats()
         } catch (err) {
             console.error('Delete failed', err)
         }
     }
 
-    const handleSellConfirm = async (id, customerName) => {
-        try {
-            await sellEntry(id, customerName)
-            setSelling(null)
-        } catch (err) {
-            console.error('Sell failed', err)
-        }
+    const handleSellConfirm = async (id, qty, customerName) => {
+        await sellEntry(id, customerName, qty)
+        setSelling(null)
     }
 
     if (isLoading) {

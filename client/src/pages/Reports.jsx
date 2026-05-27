@@ -23,7 +23,7 @@ const stageColors = {
 const Reports = () => {
     const { habitats } = useHabitats()
     const { entries } = useSalesStock()
-    const { stageTotals, transitions } = useLifecycle(entries)
+    const { stageTotals, transitions } = useLifecycle(habitats)
     const [generated, setGenerated] = useState([])
     const [loading, setLoading] = useState(null)
 
@@ -120,8 +120,8 @@ const Reports = () => {
             transitions.slice(0, 10).forEach(t => {
                 if (y > 270) { doc.addPage(); y = 20 }
                 addLine(doc, t.habitat, 14, y)
-                addLine(doc, t.fromStage, 70, y)
-                addLine(doc, t.toStage, 110, y)
+                addLine(doc, t.from_stage, 70, y)
+                addLine(doc, t.to_stage, 110, y)
                 addLine(doc, String(t.count), 150, y)
                 addLine(doc, t.date, 175, y)
                 y += 8

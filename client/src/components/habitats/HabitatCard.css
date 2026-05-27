@@ -1,22 +1,23 @@
 .habitat-card {
     background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: box-shadow 0.2s;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
 
 .habitat-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
+    transform: translateY(-2px);
 }
 
 .habitat-card-image {
     width: 100%;
     height: 180px;
     overflow: hidden;
-    background-color: #f0f0f0;
+    background-color: #f8f9fa;
 }
 
 .habitat-card-image img {
@@ -32,92 +33,107 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #bbb;
-    gap: 6px;
+    color: #cbd5e1;
+    gap: 8px;
 }
 
 .habitat-card-placeholder svg {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
 }
 
 .habitat-card-placeholder span {
     font-size: 12px;
     font-weight: 500;
+    color: #94a3b8;
 }
 
 .habitat-card-body {
-    padding: 16px;
+    padding: 18px 20px;
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .habitat-card-name {
-    font-size: 16px;
-    font-weight: 600;
-    color: #1a1a1a;
-    margin: 0 0 4px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+    letter-spacing: -0.01em;
 }
 
 .habitat-card-species {
     font-size: 13px;
-    color: #666;
-    margin: 0 0 8px;
+    color: #94a3b8;
+    margin: 0 0 10px;
+    font-weight: 500;
 }
 
 .habitat-card-meta {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-top: 4px;
+    justify-content: space-between;
+    margin-top: auto;
 }
 
 .habitat-card-stage {
     display: inline-block;
-    padding: 3px 10px;
-    border-radius: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
     font-size: 11px;
     font-weight: 600;
+    letter-spacing: 0.02em;
 }
 
 .habitat-card-count {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
-    color: #004d75;
+    color: #0f172a;
     margin: 0;
+}
+
+.habitat-card-count::before {
+    content: "× ";
+    font-weight: 400;
+    color: #94a3b8;
 }
 
 .habitat-card-actions {
     display: flex;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid #f1f5f9;
 }
 
 .habitat-card-btn {
     flex: 1;
-    padding: 10px;
+    padding: 11px 8px;
     border: none;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, color 0.2s;
 }
 
 .habitat-card-btn.edit {
-    background-color: #f8f9fa;
-    color: #1565c0;
+    background: transparent;
+    color: #64748b;
 }
 
 .habitat-card-btn.edit:hover {
-    background-color: #e3f2fd;
+    background-color: #f1f5f9;
+    color: #2563eb;
 }
 
 .habitat-card-btn.delete {
-    background-color: #f8f9fa;
-    color: #c62828;
-    border-left: 1px solid #f0f0f0;
+    background: transparent;
+    color: #64748b;
+    border-left: 1px solid #f1f5f9;
 }
 
 .habitat-card-btn.delete:hover {
-    background-color: #fce4ec;
+    background-color: #fef2f2;
+    color: #dc2626;
 }
 
 @media screen and (max-width: 768px) {
@@ -126,11 +142,11 @@
     }
 
     .habitat-card-body {
-        padding: 12px;
+        padding: 14px 16px;
     }
 
     .habitat-card-name {
-        font-size: 15px;
+        font-size: 16px;
     }
 }
 

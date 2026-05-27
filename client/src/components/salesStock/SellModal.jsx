@@ -3,11 +3,22 @@ import './SellModal.css'
 
 const SellModal = ({ entry, onConfirm, onCancel }) => {
     const [customerName, setCustomerName] = useState('')
+    const [qty, setQty] = useState(entry.available)
+    const [error, setError] = useState('')
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        if (!customerName.trim()) return
-        onConfirm(entry.id, customerName.trim())
+        setError('')
+        if (!customerName.trim() || !qty) return
+        if (qty > entry.available) {
+            setError('Quantity exceeds available stock')
+            return
+        }
+        try {
+            await onConfirm(entry.id, qty, customerName.trim())
+        } catch (err) {
+            setError(err?.message || 'Sale failed. Please try again.')
+        }
     }
 
     return (
@@ -15,9 +26,21 @@ const SellModal = ({ entry, onConfirm, onCancel }) => {
             <div className="sell-modal" onClick={e => e.stopPropagation()}>
                 <h2 className="sell-modal-title">Mark as Sold</h2>
                 <p className="sell-modal-message">
-                    Confirm sale of <strong>{entry.count}</strong> <strong>{entry.species}</strong> from <strong>{entry.habitat}</strong>?
+                    Confirm sale of <strong>{entry.species}</strong> from <strong>{entry.habitat}</strong>
                 </p>
                 <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label>Quantity to Sell</label>
+                        <input
+                            type="number"
+                            value={qty}
+                            onChange={e => setQty(Number(e.target.value))}
+                            min={1}
+                            max={entry.available}
+                            required
+                        />
+                        <small>Available: {entry.available} / {entry.count}</small>
+                    </div>
                     <div className="form-group">
                         <label>Customer Name</label>
                         <input
@@ -28,6 +51,7 @@ const SellModal = ({ entry, onConfirm, onCancel }) => {
                             required
                         />
                     </div>
+                    {error && <p className="sell-modal-error">{error}</p>}
                     <div className="form-actions">
                         <button type="button" className="modal-btn cancel" onClick={onCancel}>Cancel</button>
                         <button type="submit" className="modal-btn sell-confirm">Confirm Sale</button>

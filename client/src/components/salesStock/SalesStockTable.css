@@ -1,8 +1,8 @@
 .sales-stock-table-wrapper {
-    margin: 0 10px;
+    margin: 0 24px 24px;
     background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
     overflow: hidden;
 }
 
@@ -14,24 +14,25 @@
     display: grid;
     grid-template-columns: 1.5fr 1.5fr 1fr 0.8fr 0.8fr 0.8fr 1fr 160px;
     padding: 12px 16px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
-    color: #888;
+    color: #94a3b8;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    border-bottom: 1px solid #e0e0e0;
-    background-color: #fafafa;
+    border-bottom: 1px solid #f1f5f9;
+    background-color: #f8fafc;
 }
 
 .sales-stock-empty {
-    margin: 0 10px;
-    padding: 40px 20px;
+    margin: 0 24px 24px;
+    padding: 60px 20px;
     background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
     text-align: center;
-    color: #888;
+    color: #94a3b8;
     font-size: 15px;
+    font-weight: 500;
 }
 
 .sales-stock-pagination {
@@ -40,15 +41,15 @@
     justify-content: center;
     gap: 4px;
     padding: 12px 16px;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid #f1f5f9;
 }
 
 .page-btn {
     padding: 6px 12px;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
     background-color: #fff;
-    color: #555;
+    color: #64748b;
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;
@@ -56,13 +57,13 @@
 }
 
 .page-btn:hover:not(:disabled) {
-    background-color: #f0f0f0;
+    background-color: #f1f5f9;
 }
 
 .page-btn.active {
-    background-color: #004d75;
+    background-color: #2563eb;
     color: #fff;
-    border-color: #004d75;
+    border-color: #2563eb;
 }
 
 .page-btn:disabled {
@@ -77,17 +78,21 @@
 }
 
 @media screen and (max-width: 768px) {
+    .sales-stock-table-wrapper {
+        margin: 0 16px 16px;
+    }
+
     .sales-stock-table-header {
         grid-template-columns: 1fr 1fr 0.8fr 0.6fr 0.6fr 0.6fr 0.8fr 120px;
         padding: 10px 12px;
-        font-size: 11px;
+        font-size: 10px;
     }
 }
 
 @media screen and (max-width: 480px) {
     .sales-stock-table-header {
         grid-template-columns: 1fr 0.8fr 0.6fr 0.5fr 0.5fr 0.5fr 0.6fr 100px;
-        font-size: 10px;
+        font-size: 9px;
         padding: 8px 10px;
     }
 }
