@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
 import Button from '@/components/ui/Buttons';
-import navLogo from '@/assets/nav-logo.png'
+import navLogo from '@/assets/craylogo-removebg-preview.png'
 import dashboard from '@/assets/dashboard.png'
 import habitat from '@/assets/habitats.png'
 import inventory from '@/assets/inventory.png'
