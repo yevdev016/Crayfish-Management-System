@@ -20,7 +20,7 @@ if (process.env.DATABASE_URL) {
         port: process.env.PG_PORT,
     });
 }
-
+poolConfig.family = 4;  
 const db = new pg.Pool(poolConfig);
 
 const connectDb = async () => {
