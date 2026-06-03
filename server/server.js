@@ -36,14 +36,15 @@ app.use('/api/lifecycle', lifecycleRoutes);
 app.use('/api/activities', activityRoutes);
 app.use('/api/reports', reportRoutes);
 
+app.listen(port, () => {
+    console.log(`Server running on port: ${port}`);
+});
+
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/dist')))
+    const distPath = path.join(__dirname, '../client/dist');
+    app.use(express.static(distPath));
     app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, '../client/dist/index.html'))
-    })
-} else {
-    app.listen(port, () => {
-        console.log(`This server is running on port: ${port}`);
+        res.sendFile(path.join(distPath, 'index.html'));
     });
 }
 
