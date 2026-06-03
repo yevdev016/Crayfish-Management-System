@@ -30,8 +30,8 @@
 }
 
 .logo img {
-  height: 110px;
-  width: auto;
+  height: auto;
+  width: 200px;
   display: block;
   transition: opacity var(--transition);
 }
@@ -76,7 +76,7 @@ nav a:last-child:hover {
 
 @media screen and (max-width: 768px) {
   .logo img {
-    height: 80px;
+    width: 150px;
   }
 
   nav {
@@ -99,7 +99,7 @@ nav a:last-child:hover {
   }
 
   .logo img {
-    height: 60px;
+    width: 120px;
   }
 
   nav {
