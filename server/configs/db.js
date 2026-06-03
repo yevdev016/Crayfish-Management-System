@@ -1,8 +1,6 @@
 import pg from 'pg'
 import dotenv from 'dotenv'
-import dns from 'dns'
-
-dns.setDefaultResultOrder('ipv4first')
+import dns from 'dns/promises'
 
 dotenv.config();
 
@@ -19,6 +17,14 @@ if (process.env.DATABASE_URL) {
     poolConfig.port = url.port;
     poolConfig.database = url.pathname.slice(1);
     poolConfig.ssl = { rejectUnauthorized: false };
+
+    try {
+        const [ipv4] = await dns.resolve4(poolConfig.host);
+        console.log(`Resolved ${poolConfig.host} -> ${ipv4}`);
+        poolConfig.host = ipv4;
+    } catch (err) {
+        console.error('IPv4 resolution failed:', err.message);
+    }
 } else {
     Object.assign(poolConfig, {
         user: process.env.PG_USER,
@@ -28,8 +34,6 @@ if (process.env.DATABASE_URL) {
         port: process.env.PG_PORT,
     });
 }
-
-poolConfig.family = 4;
 
 const db = new pg.Pool(poolConfig);
 
