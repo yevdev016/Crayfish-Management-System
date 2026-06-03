@@ -9,7 +9,12 @@ const poolConfig = {
 };
 
 if (process.env.DATABASE_URL) {
-    poolConfig.connectionString = process.env.DATABASE_URL;
+    const url = new URL(process.env.DATABASE_URL);
+    poolConfig.user = decodeURIComponent(url.username);
+    poolConfig.password = decodeURIComponent(url.password);
+    poolConfig.host = url.hostname;
+    poolConfig.port = url.port;
+    poolConfig.database = url.pathname.slice(1);
     poolConfig.ssl = { rejectUnauthorized: false };
 } else {
     Object.assign(poolConfig, {
@@ -20,7 +25,9 @@ if (process.env.DATABASE_URL) {
         port: process.env.PG_PORT,
     });
 }
-poolConfig.family = 4;  
+
+poolConfig.family = 4;
+
 const db = new pg.Pool(poolConfig);
 
 const connectDb = async () => {
