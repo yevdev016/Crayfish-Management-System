@@ -2,6 +2,12 @@
     flex: 1;
 }
 
+.habitat-empty {
+    padding: 0 20px;
+    font-size: 13px;
+    color: #94a3b8;
+}
+
 .habitat-table {
     display: flex;
     flex-direction: column;

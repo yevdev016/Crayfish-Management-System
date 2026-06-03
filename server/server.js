@@ -3,15 +3,20 @@ import passport from 'passport';
 import dotenv from 'dotenv'
 dotenv.config();
 import cors from 'cors'
+import path from 'path'
+import { fileURLToPath } from 'url'
 import initDatabase from './configs/initDb.js';
 import authRoutes from './routes/authRoutes.js'
 import habitatRoutes from './routes/habitatRoutes.js'
 import saleStockRoutes from './routes/saleStockRoutes.js'
 import lifecycleRoutes from './routes/lifecycleRoutes.js'
 import activityRoutes from './routes/activityRoutes.js'
+import reportRoutes from './routes/reportRoutes.js'
 import './configs/passport.js'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const app = express();
 app.use(helmet());
 const port = process.env.SERVER_PORT || 3000;
@@ -29,6 +34,17 @@ app.use('/api/habitats', habitatRoutes)
 app.use('/api/sales-stock', saleStockRoutes);
 app.use('/api/lifecycle', lifecycleRoutes);
 app.use('/api/activities', activityRoutes);
-app.listen(port, () => {
-    console.log(`This server is running on port: ${port}`);
-});
+app.use('/api/reports', reportRoutes);
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../client/dist')))
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '../client/dist/index.html'))
+    })
+} else {
+    app.listen(port, () => {
+        console.log(`This server is running on port: ${port}`);
+    });
+}
+
+export default app;

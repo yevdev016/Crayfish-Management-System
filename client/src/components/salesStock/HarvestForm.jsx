@@ -22,7 +22,7 @@ const HarvestForm = ({ habitats, entry, onSave, onCancel }) => {
                 habitat_id: found?.id,
                 count: Number(harvestData.count),
                 price: harvestData.price ? Number(harvestData.price) : 0,
-                notes: harvestData.notes.trim() || null,
+                notes: harvestData.notes.trim() || undefined,
             })
     }
 

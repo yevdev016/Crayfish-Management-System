@@ -1,4 +1,7 @@
+import { useState, useEffect } from 'react'
 import StatsCard from './StatsCard'
+import { getHabitats } from '@/services/habitatServices'
+import { getSaleStock } from '@/services/saleStockServices'
 import './StatsGrid.css'
 
 const HabitatsIcon = (
@@ -45,14 +48,71 @@ const CraylingsIcon = (
     </svg>
 )
 
-const stats = [
-    { title: 'Total Habitats', value: '8', icon: HabitatsIcon, color: '#004d75' },
-    { title: 'Total Crayfish', value: '1,284', icon: CrayfishIcon, color: '#1974a5' },
-    { title: 'Berried Females', value: '24', icon: BerriedIcon, color: '#e67e22' },
-    { title: 'Craylings', value: '156', icon: CraylingsIcon, color: '#27ae60' },
-]
+const RevenueIcon = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="12" y1="1" x2="12" y2="23" />
+        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+    </svg>
+)
 
-const StatsGrid = () => {
+const SoldIcon = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="20 6 9 17 4 12" />
+    </svg>
+)
+
+const BoxIcon = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+        <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+        <line x1="12" y1="22.08" x2="12" y2="12" />
+    </svg>
+)
+
+const TrendingIcon = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+        <polyline points="17 6 23 6 23 12" />
+    </svg>
+)
+
+const StatsGrid = ({ view }) => {
+    const [habitats, setHabitats] = useState([])
+    const [saleStock, setSaleStock] = useState([])
+
+    useEffect(() => {
+        getHabitats().then(setHabitats).catch(() => {})
+        getSaleStock().then(setSaleStock).catch(() => {})
+    }, [])
+
+    const totalCrayfish = habitats.reduce((s, h) => s + (h.count || 0), 0)
+    const berried = habitats.filter(h => h.stage === 'Berried').reduce((s, h) => s + (h.count || 0), 0)
+    const craylings = habitats.filter(h => h.stage === 'Crayling').reduce((s, h) => s + (h.count || 0), 0)
+
+    const totalRevenue = saleStock.reduce((s, e) => {
+        const qty = (e.count || 0) - (e.available || 0)
+        return s + qty * (e.price || 0)
+    }, 0)
+    const itemsSold = saleStock.reduce((s, e) => s + Math.max(0, (e.count || 0) - (e.available || 0)), 0)
+    const activeEntries = saleStock.filter(e => e.status !== 'sold').length
+    const totalEntries = saleStock.length
+
+    const habitatStats = [
+        { title: 'Total Habitats', value: habitats.length, icon: HabitatsIcon, color: '#004d75' },
+        { title: 'Total Crayfish', value: totalCrayfish.toLocaleString(), icon: CrayfishIcon, color: '#1974a5' },
+        { title: 'Berried Females', value: berried, icon: BerriedIcon, color: '#e67e22' },
+        { title: 'Craylings', value: craylings, icon: CraylingsIcon, color: '#27ae60' },
+    ]
+
+    const saleStats = [
+        { title: 'Total Revenue', value: totalRevenue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), icon: RevenueIcon, color: '#059669' },
+        { title: 'Items Sold', value: itemsSold, icon: SoldIcon, color: '#2563eb' },
+        { title: 'Active Stock', value: activeEntries, icon: BoxIcon, color: '#d97706' },
+        { title: 'Stock Entries', value: totalEntries, icon: TrendingIcon, color: '#7c3aed' },
+    ]
+
+    const stats = view === 'sales' ? saleStats : habitatStats
+
     return (
         <div className="stats-grid">
             {stats.map((stat) => (

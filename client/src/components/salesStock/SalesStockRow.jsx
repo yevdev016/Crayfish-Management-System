@@ -11,6 +11,7 @@ const stageColors = {
 const statusStyles = {
     growing: { bg: '#fff8e1', color: '#f57f17', label: 'Growing' },
     available: { bg: '#e8f5e9', color: '#2e7d32', label: 'Available' },
+    partial: { bg: '#fff3e0', color: '#e65100', label: 'Partial' },
     sold: { bg: '#f5f5f5', color: '#888', label: 'Sold' },
 }
 

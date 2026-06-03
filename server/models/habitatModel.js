@@ -24,12 +24,18 @@ export const createHabitat = async(userId, name, species, count, stage, image) =
     return res.rows[0];
 }
 export const updateHabitat = async(id, userId, data) => {
+    const keys = Object.keys(data)
+    if (keys.length === 0) return null
+
+    const setClauses = keys.map((key, i) => `${key} = $${i + 1}`)
+    const values = keys.map(k => data[k])
+    values.push(id, userId)
+
     const query = `
     UPDATE habitats
-    SET name = $1, species = $2, count = $3, stage = $4, image = $5
-    WHERE id = $6 AND user_id = $7
+    SET ${setClauses.join(', ')}
+    WHERE id = $${keys.length + 1} AND user_id = $${keys.length + 2}
     RETURNING *`
-    const values = [data.name, data.species, data.count, data.stage, data.image, id, userId];
     const res = await db.query(query, values);
     return res.rows[0];
 }

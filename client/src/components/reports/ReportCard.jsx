@@ -7,7 +7,7 @@ const icons = {
             <polyline points="9 22 9 12 15 12 15 22" />
         </svg>
     ),
-    inventory: (
+    'sales-stock': (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
             <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
@@ -32,7 +32,7 @@ const icons = {
 
 const descriptions = {
     habitat: 'Summary of all habitats including species, growth stage, and population count.',
-    inventory: 'Complete inventory breakdown grouped by habitat with stage counts.',
+    'sales-stock': 'Complete inventory breakdown grouped by habitat with stage counts.',
     lifecycle: 'Overview of crayfish lifecycle stages and recent stage transitions.',
     activity: 'Log of recent actions and changes made across the system.',
 }
@@ -42,7 +42,7 @@ const ReportCard = ({ type, onGenerate, loading }) => {
         <div className="report-card">
             <div className="report-card-icon">{icons[type]}</div>
             <div className="report-card-info">
-                <h3 className="report-card-title">{type.charAt(0).toUpperCase() + type.slice(1)} Report</h3>
+                <h3 className="report-card-title">{type === 'sales-stock' ? 'Sales Stock' : type.charAt(0).toUpperCase() + type.slice(1)} Report</h3>
                 <p className="report-card-desc">{descriptions[type]}</p>
             </div>
             <button className="report-card-btn" onClick={onGenerate} disabled={loading}>

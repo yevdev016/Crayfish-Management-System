@@ -1,5 +1,17 @@
 import * as habitatModel from '../models/habitatModel.js'
 import { createActivity } from '../models/activityModel.js'
+import { uploadImage } from '../services/supabaseService.js'
+
+const uploadImageIfNeeded = async (image, userId) => {
+  if (!image || typeof image !== 'string' || !image.startsWith('data:')) return image
+  const match = image.match(/^data:(image\/\w+);base64,(.+)$/)
+  if (!match) return image
+  const contentType = match[1]
+  const buffer = Buffer.from(match[2], 'base64')
+  const ext = contentType.split('/')[1]
+  const fileName = `habitat_${userId}_${Date.now()}.${ext}`
+  return uploadImage(buffer, fileName, contentType)
+}
 
 export const getHabitats = async (req, res) => {
     try {
@@ -22,8 +34,10 @@ export const getHabitat = async (req, res) => {
     }
 }
 export const createHabitat = async(req, res) => {
-    const { name, species, count, stage, image } = req.body;
+    const { name, species, count, stage } = req.body;
+    let { image } = req.body
     try {
+        image = await uploadImageIfNeeded(image, req.user.id)
         const habitat = await habitatModel.createHabitat(
             req.user.id, name, species, count, stage, image
         );
@@ -35,6 +49,11 @@ export const createHabitat = async(req, res) => {
 }
 export const updateHabitat = async (req, res) => {
     try {
+        if (req.body.image) {
+            req.body.image = await uploadImageIfNeeded(req.body.image, req.user.id)
+        } else if (req.body.image === null || req.body.image === '') {
+            delete req.body.image
+        }
         const habitat = await habitatModel.updateHabitat(
         req.params.id, req.user.id, req.body
     );

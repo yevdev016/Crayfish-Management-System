@@ -1,3 +1,5 @@
+import { useState, useEffect, useMemo } from 'react'
+import { getActivities } from '@/services/activityServices'
 import './RecentActivity.css'
 
 const AddIcon = (
@@ -34,37 +36,89 @@ const ReportIcon = (
     </svg>
 )
 
-const activities = [
-    { action: 'Added 50 crayfish to Pond Alpha', type: 'add', time: '2 hours ago' },
-    { action: 'Updated water parameters in Tank Beta', type: 'edit', time: '4 hours ago' },
-    { action: 'Removed 12 adults from Pond Gamma', type: 'delete', time: '1 day ago' },
-    { action: 'Generated monthly population report', type: 'report', time: '2 days ago' },
-    { action: 'Marked 8 females as berried in Tank Delta', type: 'add', time: '3 days ago' },
-]
+const SellIcon = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="20 6 9 17 4 12" />
+    </svg>
+)
 
-const iconMap = { add: AddIcon, edit: EditIcon, delete: TrashIcon, report: ReportIcon }
-const colorMap = { add: '#27ae60', edit: '#1565c0', delete: '#c62828', report: '#e67e22' }
+const HarvestIcon = (
+    <svg viewBox="0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+    </svg>
+)
+
+const iconMap = { add: AddIcon, edit: EditIcon, delete: TrashIcon, report: ReportIcon, sell: SellIcon, harvest: HarvestIcon }
+const colorMap = { add: '#27ae60', edit: '#1565c0', delete: '#c62828', report: '#e67e22', sell: '#059669', harvest: '#7c3aed' }
+
+const inferType = (action) => {
+    const lower = action.toLowerCase()
+    if (lower.includes('created') || lower.includes('added') || lower.includes('add') || lower.includes('record')) return 'add'
+    if (lower.includes('updated') || lower.includes('edit')) return 'edit'
+    if (lower.includes('deleted') || lower.includes('remove') || lower.includes('delete')) return 'delete'
+    if (lower.includes('sold') || lower.includes('sale')) return 'sell'
+    if (lower.includes('harvest') || lower.includes('harvested')) return 'harvest'
+    if (lower.includes('report') || lower.includes('generated')) return 'report'
+    return 'add'
+}
+
+const timeAgo = (dateStr) => {
+    const now = Date.now()
+    const then = new Date(dateStr).getTime()
+    const diff = Math.max(0, Math.floor((now - then) / 1000))
+    if (diff < 60) return 'just now'
+    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`
+    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`
+    if (diff < 2592000) return `${Math.floor(diff / 86400)}d ago`
+    return new Date(dateStr).toLocaleDateString()
+}
 
 const RecentActivity = () => {
+    const [activities, setActivities] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        getActivities()
+            .then(setActivities)
+            .catch(() => {})
+            .finally(() => setLoading(false))
+    }, [])
+
+    const list = useMemo(() => activities.slice(0, 8), [activities])
+
+    if (loading) {
+        return (
+            <div className="recent-activity">
+                <h2 className="section-title">Recent Activity</h2>
+                <p className="activity-empty">Loading...</p>
+            </div>
+        )
+    }
+
     return (
         <div className="recent-activity">
             <h2 className="section-title">Recent Activity</h2>
-            <div className="activity-list">
-                {activities.map((a, i) => {
-                    const Icon = iconMap[a.type]
-                    return (
-                        <div key={i} className="activity-item">
-                            <div className="activity-icon" style={{ backgroundColor: colorMap[a.type] + '15', color: colorMap[a.type] }}>
-                                {Icon}
+            {list.length === 0 ? (
+                <p className="activity-empty">No activity yet.</p>
+            ) : (
+                <div className="activity-list">
+                    {list.map((a) => {
+                        const type = inferType(a.action)
+                        const Icon = iconMap[type] || AddIcon
+                        return (
+                            <div key={a.id} className="activity-item">
+                                <div className="activity-icon" style={{ backgroundColor: (colorMap[type] || '#94a3b8') + '15', color: colorMap[type] || '#94a3b8' }}>
+                                    {Icon}
+                                </div>
+                                <div className="activity-info">
+                                    <p className="activity-action">{a.action}</p>
+                                    <span className="activity-time">{timeAgo(a.created_at)}</span>
+                                </div>
                             </div>
-                            <div className="activity-info">
-                                <p className="activity-action">{a.action}</p>
-                                <span className="activity-time">{a.time}</span>
-                            </div>
-                        </div>
-                    )
-                })}
-            </div>
+                        )
+                    })}
+                </div>
+            )}
         </div>
     )
 }

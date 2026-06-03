@@ -42,7 +42,7 @@ export const updateSaleStock = async (id, userId, data) => {
         await client.query('BEGIN');
 
         const old = await client.query(
-            `SELECT habitat_id, count, available FROM sales_stock WHERE id = $1 AND user_id = $2 FOR UPDATE`,
+            `SELECT habitat_id, count, available, price, notes FROM sales_stock WHERE id = $1 AND user_id = $2 FOR UPDATE`,
             [id, userId]
         );
         if (!old.rows[0]) {
@@ -50,14 +50,23 @@ export const updateSaleStock = async (id, userId, data) => {
             return null;
         }
 
-        const { habitat_id: oldHabitatId, count: oldCount, available: oldAvailable } = old.rows[0];
-        const newHabitatId = data.habitat_id || oldHabitatId;
-        const delta = data.count - oldCount;
+        const { habitat_id: oldHabitatId, count: oldCount, available: oldAvailable, price: oldPrice, notes: oldNotes } = old.rows[0];
+        const newCount = data.count ?? oldCount;
+        const newHabitatId = data.habitat_id ?? oldHabitatId;
+        const newPrice = data.price ?? oldPrice;
+        const newNotes = data.notes ?? oldNotes;
+        const delta = newCount - oldCount;
 
         if (oldAvailable + delta < 0) {
             await client.query('ROLLBACK');
             throw new Error('Cannot reduce count below what has already been sold');
         }
+
+        const newAvailable = oldAvailable + delta;
+
+        const status = newAvailable <= 0 ? 'sold'
+            : newAvailable < newCount ? 'partial'
+            : 'available';
 
         if (newHabitatId !== oldHabitatId) {
             const restore = await client.query(
@@ -70,7 +79,7 @@ export const updateSaleStock = async (id, userId, data) => {
             }
             const deduct = await client.query(
                 `UPDATE habitats SET count = count - $1 WHERE id = $2 AND user_id = $3 AND count >= $1`,
-                [data.count, newHabitatId, userId]
+                [newCount, newHabitatId, userId]
             );
             if (deduct.rowCount === 0) {
                 await client.query('ROLLBACK');
@@ -79,10 +88,9 @@ export const updateSaleStock = async (id, userId, data) => {
             await client.query(
                 `UPDATE sales_stock
                  SET count = $1, price = $2, notes = $3, habitat_id = $4,
-                     available = $5,
-                     status = CASE WHEN $5 <= 0 THEN 'sold' ELSE status END
-                 WHERE id = $6 AND user_id = $7`,
-                [data.count, data.price, data.notes, newHabitatId, oldAvailable + delta, id, userId]
+                     available = $5, status = $6
+                 WHERE id = $7 AND user_id = $8`,
+                [newCount, newPrice, newNotes, newHabitatId, newAvailable, status, id, userId]
             );
         } else {
             if (delta > 0) {
@@ -104,10 +112,9 @@ export const updateSaleStock = async (id, userId, data) => {
             await client.query(
                 `UPDATE sales_stock
                  SET count = $1, price = $2, notes = $3,
-                     available = $4,
-                     status = CASE WHEN $4 <= 0 THEN 'sold' ELSE status END
-                 WHERE id = $5 AND user_id = $6`,
-                [data.count, data.price, data.notes, oldAvailable + delta, id, userId]
+                     available = $4, status = $5
+                 WHERE id = $6 AND user_id = $7`,
+                [newCount, newPrice, newNotes, newAvailable, status, id, userId]
             );
         }
 
@@ -132,7 +139,7 @@ export const updateSaleStock = async (id, userId, data) => {
 export const sellSaleStock = async (id, userId, qty, customerName) => {
     const query = `
     WITH valid AS (
-        SELECT id FROM sales_stock WHERE id = $3 AND user_id = $4 AND available >= $1
+        SELECT id, count FROM sales_stock WHERE id = $3 AND user_id = $4 AND available >= $1
     ),
     insert_sale AS (
         INSERT INTO sales(sales_stock_id, qty, customer_name)
@@ -144,7 +151,11 @@ export const sellSaleStock = async (id, userId, qty, customerName) => {
         SET available = available - $1,
             customer_name = $2,
             sold_date = CURRENT_DATE,
-            status = CASE WHEN available - $1 <= 0 THEN 'sold' ELSE status END
+            status = CASE
+                WHEN available - $1 <= 0 THEN 'sold'
+                WHEN available - $1 < count THEN 'partial'
+                ELSE 'available'
+            END
         WHERE id IN (SELECT id FROM valid)
         RETURNING *
     )

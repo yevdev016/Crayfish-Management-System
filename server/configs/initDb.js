@@ -74,6 +74,16 @@ const initDatabase = async () => {
         ALTER TABLE sales ADD CONSTRAINT sales_sales_stock_id_fkey
             FOREIGN KEY (sales_stock_id) REFERENCES sales_stock(id) ON DELETE SET NULL;
      `
+     const createReportsTable = `
+        CREATE TABLE IF NOT EXISTS reports (
+            id SERIAL PRIMARY KEY,
+            user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+            report_name VARCHAR(255) NOT NULL,
+            report_type VARCHAR(50) NOT NULL,
+            storage_url TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    `
     try {
         console.log("Initializing db");
         await db.query(createUserTable);
@@ -83,6 +93,7 @@ const initDatabase = async () => {
         await db.query(createSalesTable);
         await db.query(createActivitiesTable);
         await db.query(fixSalesFK);
+        await db.query(createReportsTable);
     } catch(err) {
         console.log("Error Initializing db", err);
         process.exit(1);

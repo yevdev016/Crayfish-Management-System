@@ -1,6 +1,5 @@
 import db from '../configs/db.js';
-
-const validStages = ['Berried', 'Crayling', 'Juvenile', 'Adult', 'Breeder'];
+import { validStages } from '../constants.js';
 
 export const getAllLifecycle = async (userId) => {
     const query = `
@@ -15,10 +14,9 @@ export const getAllLifecycle = async (userId) => {
 }
 
 export const createLifecycle = async (userId, data) => {
-    if (!validStages.includes(data.from_stage)) throw new Error('Invalid from_stage');
-    if (!validStages.includes(data.to_stage)) throw new Error('Invalid to_stage');
     if (data.from_stage === data.to_stage) throw new Error('From and to stages must be different');
-    if (!data.count || data.count < 1) throw new Error('Count must be at least 1');
+
+    if (data.count < 1) throw new Error('Count must be at least 1');
 
     const client = await db.connect();
     try {
@@ -53,8 +51,8 @@ export const createLifecycle = async (userId, data) => {
         );
 
         await client.query(
-            `UPDATE habitats SET stage = $1 WHERE id = $2 AND user_id = $3`,
-            [data.to_stage, data.habitat_id, userId]
+            `UPDATE habitats SET count = count - $1, stage = $2 WHERE id = $3 AND user_id = $4`,
+            [data.count, data.to_stage, data.habitat_id, userId]
         );
 
         await client.query('COMMIT');
@@ -81,12 +79,33 @@ export const updateLifecycle = async (id, userId, data) => {
         await client.query('BEGIN');
 
         const existing = await client.query(
-            `SELECT id FROM lifecycle WHERE id = $1 AND user_id = $2 FOR UPDATE`,
+            `SELECT id, count, habitat_id FROM lifecycle WHERE id = $1 AND user_id = $2 FOR UPDATE`,
             [id, userId]
         );
         if (!existing.rows[0]) {
             await client.query('ROLLBACK');
             return null;
+        }
+
+        const oldCount = existing.rows[0].count;
+        const habitatId = existing.rows[0].habitat_id;
+
+        const delta = data.count - oldCount;
+
+        if (delta > 0) {
+            const habitatUpdate = await client.query(
+                `UPDATE habitats SET count = count - $1 WHERE id = $2 AND user_id = $3 AND count >= $1`,
+                [delta, habitatId, userId]
+            );
+            if (habitatUpdate.rowCount === 0) {
+                await client.query('ROLLBACK');
+                throw new Error('Insufficient habitat count to increase transition');
+            }
+        } else if (delta < 0) {
+            await client.query(
+                `UPDATE habitats SET count = count + $1 WHERE id = $2 AND user_id = $3`,
+                [-delta, habitatId, userId]
+            );
         }
 
         const updated = await client.query(
@@ -113,9 +132,37 @@ export const updateLifecycle = async (id, userId, data) => {
 }
 
 export const deleteLifecycle = async (id, userId) => {
-    const query = `
-    DELETE FROM lifecycle WHERE id = $1 AND user_id = $2 RETURNING *;
-    `
-    const res = await db.query(query, [id, userId])
-    return res.rows[0] || null
+    const client = await db.connect();
+    try {
+        await client.query('BEGIN');
+
+        const entry = await client.query(
+            `SELECT id, count, habitat_id, from_stage FROM lifecycle WHERE id = $1 AND user_id = $2`,
+            [id, userId]
+        );
+        if (!entry.rows[0]) {
+            await client.query('ROLLBACK');
+            return null;
+        }
+
+        const { count, habitat_id, from_stage } = entry.rows[0];
+
+        await client.query(
+            `UPDATE habitats SET count = count + $1, stage = $2 WHERE id = $3 AND user_id = $4`,
+            [count, from_stage, habitat_id, userId]
+        );
+
+        const deleted = await client.query(
+            `DELETE FROM lifecycle WHERE id = $1 AND user_id = $2 RETURNING *`,
+            [id, userId]
+        );
+
+        await client.query('COMMIT');
+        return deleted.rows[0];
+    } catch (err) {
+        await client.query('ROLLBACK');
+        throw err;
+    } finally {
+        client.release();
+    }
 }
