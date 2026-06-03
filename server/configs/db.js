@@ -22,3 +22,16 @@ if (process.env.DATABASE_URL) {
 }
 
 const db = new pg.Pool(poolConfig);
+
+const connectDb = async () => {
+    try {
+        const client = await db.connect();
+        console.log("Database is connected")
+        client.release();
+    } catch(err) {
+        console.error('Database connection error: ', err);
+    }
+}
+connectDb();
+
+export default db;
