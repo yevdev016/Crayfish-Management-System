@@ -31,7 +31,7 @@ router.get('/check-auth', passport.authenticate('jwt', {session: false}), (req, 
 router.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 router.get('/google/callback', 
     passport.authenticate('google', {
-        failureRedirect: 'http://localhost:5173/login', 
+        failureRedirect: `${process.env.FRONT_END_API}/login`, 
         session: false
     }),
     (req, res) => {
@@ -39,10 +39,10 @@ router.get('/google/callback',
             const userId = req.user.id;
             const token = generateJwt(userId);
             setAuthCookie(res, token);
-            res.redirect('http://localhost:5173/dashboard');
+            res.redirect(`${process.env.FRONT_END_API}/dashboard`);
         } catch(err) {
             console.error("Token Generation Error:", err);
-            res.redirect('http://localhost:5173/login');
+            res.redirect(`${process.env.FRONT_END_API}/login`);
         }
         
     }
