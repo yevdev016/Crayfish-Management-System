@@ -167,22 +167,86 @@
 }
 
 @media screen and (max-width: 768px) {
+    .row-species {
+        display: none;
+    }
+
     .sales-stock-row {
-        grid-template-columns: 1fr 1fr 0.8fr 0.6fr 0.6fr 0.6fr 0.8fr 120px;
+        grid-template-columns: 1.2fr 0.8fr 0.6fr 0.6fr 0.6fr 0.8fr 120px;
         padding: 10px 12px;
         font-size: 13px;
     }
 }
 
 @media screen and (max-width: 480px) {
+    .row-species,
+    .row-sold-date {
+        display: none;
+    }
+
     .sales-stock-row {
-        grid-template-columns: 1fr 0.8fr 0.6fr 0.5fr 0.5fr 0.5fr 0.6fr 100px;
+        grid-template-columns: 1fr 0.7fr 0.6fr 0.6fr 0.6fr;
         font-size: 12px;
-        padding: 8px 10px;
+        padding: 10px 12px;
+        gap: 4px;
+    }
+
+    .row-actions {
+        flex-direction: column;
+        gap: 3px;
     }
 
     .row-btn {
-        padding: 3px 6px;
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+
+    .row-count {
+        font-size: 15px;
+    }
+
+    .row-price {
+        font-size: 13px;
+    }
+
+    .row-status-badge {
+        font-size: 11px;
+        padding: 2px 8px;
+    }
+
+    .row-badge {
+        font-size: 11px;
+        padding: 2px 8px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .row-species,
+    .row-stage,
+    .row-sold-date {
+        display: none;
+    }
+
+    .sales-stock-row {
+        grid-template-columns: 1fr 0.5fr 0.5fr 1fr;
+        padding: 8px 10px;
+        font-size: 11px;
+        gap: 4px;
+    }
+
+    .row-actions {
+        flex-direction: row;
+        gap: 2px;
+    }
+
+    .row-btn {
         font-size: 10px;
+        padding: 3px 6px;
+    }
+
+    .notes-tip {
+        width: 14px;
+        height: 14px;
+        font-size: 8px;
     }
 }

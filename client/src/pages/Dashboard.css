@@ -130,3 +130,22 @@
         font-size: 13px;
     }
 }
+
+@media screen and (max-width: 320px) {
+    .dashboard-body {
+        padding: 0 8px;
+    }
+
+    .dashboard-grid {
+        gap: 12px;
+    }
+
+    .dashboard-toggle-bar {
+        padding: 0 8px 12px;
+    }
+
+    .view-toggle button {
+        padding: 6px 14px;
+        font-size: 12px;
+    }
+}

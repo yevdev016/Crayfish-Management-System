@@ -85,3 +85,23 @@
     border-radius: 8px;
     font-size: 13px;
 }
+
+@media screen and (max-width: 480px) {
+    .sell-modal {
+        padding: 20px;
+        max-width: calc(100vw - 32px);
+    }
+
+    .sell-modal-title {
+        font-size: 17px;
+    }
+
+    .sell-modal .form-group label {
+        font-size: 12px;
+    }
+
+    .sell-modal .form-group input {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+}

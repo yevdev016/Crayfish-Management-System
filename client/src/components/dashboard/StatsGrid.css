@@ -26,3 +26,11 @@
         gap: 12px;
     }
 }
+
+@media screen and (max-width: 320px) {
+    .stats-grid {
+        padding: 0 8px;
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+}

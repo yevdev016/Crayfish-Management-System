@@ -85,3 +85,23 @@
         height: 13px;
     }
 }
+
+@media screen and (max-width: 320px) {
+    .activity-item {
+        padding: 8px 12px;
+        gap: 8px;
+    }
+
+    .activity-action {
+        font-size: 11px;
+    }
+
+    .activity-time {
+        font-size: 10px;
+    }
+
+    .activity-empty {
+        font-size: 11px;
+        padding: 0 12px;
+    }
+}

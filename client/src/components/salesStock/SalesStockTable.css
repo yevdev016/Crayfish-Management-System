@@ -83,15 +83,52 @@
     }
 
     .sales-stock-table-header {
-        grid-template-columns: 1fr 1fr 0.8fr 0.6fr 0.6fr 0.6fr 0.8fr 120px;
+        grid-template-columns: 1.2fr 0.8fr 0.6fr 0.6fr 0.6fr 0.8fr 120px;
         padding: 10px 12px;
         font-size: 10px;
+    }
+
+    .sales-stock-table-header > span:nth-child(2) {
+        display: none;
     }
 }
 
 @media screen and (max-width: 480px) {
+    .sales-stock-table-wrapper {
+        margin: 0 12px 12px;
+    }
+
+    .sales-stock-table-header > span:nth-child(2),
+    .sales-stock-table-header > span:nth-child(7) {
+        display: none;
+    }
+
     .sales-stock-table-header {
-        grid-template-columns: 1fr 0.8fr 0.6fr 0.5fr 0.5fr 0.5fr 0.6fr 100px;
+        grid-template-columns: 1fr 0.7fr 0.6fr 0.6fr 0.6fr;
+        font-size: 10px;
+        padding: 10px 12px;
+    }
+
+    .sales-stock-empty {
+        margin: 0 12px 12px;
+        padding: 40px 16px;
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .sales-stock-table-wrapper {
+        margin: 0 8px 8px;
+    }
+
+    .sales-stock-table-header > span:nth-child(2),
+    .sales-stock-table-header > span:nth-child(3),
+    .sales-stock-table-header > span:nth-child(7) {
+        display: none;
+    }
+
+    .sales-stock-table-header {
+        grid-template-columns: 1fr 0.5fr 0.5fr 1fr;
         font-size: 9px;
         padding: 8px 10px;
     }

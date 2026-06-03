@@ -174,3 +174,29 @@
         height: 24px;
     }
 }
+
+@media screen and (max-width: 320px) {
+    .navigation-container {
+        width: 50px;
+        padding: 8px 4px;
+    }
+
+    .navigation-container.nav-expanded {
+        width: 180px;
+    }
+
+    .nav-logo-container img {
+        width: 140px;
+    }
+
+    .navigation-item img,
+    .logout-container img {
+        height: 20px;
+    }
+
+    .navigation-item {
+        font-size: 14px;
+        margin-bottom: 14px;
+        padding: 4px 6px;
+    }
+}

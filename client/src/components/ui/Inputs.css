@@ -54,3 +54,31 @@
     border-color: #dc2626;
     background-color: #fef2f2;
 }
+
+@media screen and (max-width: 768px) {
+    .input-wrapper label {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .label-text {
+        min-width: unset;
+        white-space: normal;
+    }
+
+    .input-wrapper input {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .input-wrapper {
+        margin-bottom: 1rem;
+    }
+
+    .input-wrapper input {
+        padding: 8px 12px;
+        font-size: 0.875rem;
+    }
+}

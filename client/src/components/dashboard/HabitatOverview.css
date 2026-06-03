@@ -138,3 +138,24 @@
         font-size: 14px;
     }
 }
+
+@media screen and (max-width: 320px) {
+    .habitat-table-header {
+        font-size: 9px;
+    }
+
+    .habitat-table-row {
+        font-size: 11px;
+        padding: 6px 12px;
+    }
+
+    .habitat-empty {
+        font-size: 11px;
+        padding: 0 12px;
+    }
+
+    .stage-badge {
+        font-size: 9px;
+        padding: 1px 6px;
+    }
+}

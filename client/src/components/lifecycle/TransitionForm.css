@@ -24,3 +24,16 @@
     height: 20px;
     color: #94a3b8;
 }
+
+@media screen and (max-width: 480px) {
+    .form-row {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .form-arrow-symbol {
+        transform: rotate(90deg);
+        padding: 4px 0;
+        width: auto;
+    }
+}

@@ -109,3 +109,48 @@
         gap: 6px;
     }
 }
+
+@media screen and (max-width: 480px) {
+    .sales-summary-row {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .sales-summary-item {
+        flex: 1 1 calc(50% - 6px);
+        padding: 6px;
+    }
+
+    .sales-summary-value {
+        font-size: 13px;
+    }
+
+    .sales-summary-label {
+        font-size: 10px;
+    }
+
+    .chart-bars {
+        height: 100px;
+        gap: 4px;
+        padding: 0 16px 8px;
+    }
+
+    .chart-bar-label {
+        font-size: 8px;
+    }
+
+    .sales-chart-empty {
+        font-size: 11px;
+        padding: 0 16px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .sales-summary-item {
+        flex: 1 1 100%;
+    }
+
+    .chart-bars {
+        height: 80px;
+    }
+}

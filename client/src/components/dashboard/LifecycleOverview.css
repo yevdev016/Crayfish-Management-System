@@ -76,3 +76,52 @@
         font-size: 16px;
     }
 }
+
+@media screen and (max-width: 480px) {
+    .lifecycle-list {
+        padding: 0 16px;
+        gap: 6px;
+    }
+
+    .lifecycle-item {
+        padding: 8px 10px;
+        gap: 10px;
+    }
+
+    .lifecycle-value {
+        font-size: 15px;
+    }
+
+    .lifecycle-label {
+        font-size: 11px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .lifecycle-list {
+        padding: 0 12px;
+    }
+
+    .lifecycle-item {
+        padding: 6px 8px;
+        gap: 8px;
+    }
+
+    .lifecycle-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .lifecycle-icon svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .lifecycle-value {
+        font-size: 13px;
+    }
+
+    .lifecycle-label {
+        font-size: 10px;
+    }
+}

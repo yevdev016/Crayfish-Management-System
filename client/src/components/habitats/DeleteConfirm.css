@@ -81,3 +81,28 @@
 .modal-btn.delete-btn:hover {
     background-color: #b91c1c;
 }
+
+@media screen and (max-width: 480px) {
+    .delete-modal {
+        padding: 24px 20px;
+        max-width: calc(100vw - 32px);
+    }
+
+    .delete-title {
+        font-size: 16px;
+    }
+
+    .delete-message {
+        font-size: 13px;
+    }
+
+    .delete-actions {
+        flex-direction: column;
+    }
+
+    .modal-btn.cancel,
+    .modal-btn.delete-btn {
+        font-size: 13px;
+        padding: 8px;
+    }
+}
