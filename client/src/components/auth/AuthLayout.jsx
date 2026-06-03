@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
 import './AuthLayout.css'
 import google from '@/assets/icon-google.svg'
-import logo from '@/assets/LOGO-CRAYFISH.png'
+import logo from '@/assets/nav-logo.png'
+
+const API_URL = import.meta.env.VITE_API_URL
 
 const AuthLayout = ({children, isLogin}) => {
     return(
@@ -16,7 +18,7 @@ const AuthLayout = ({children, isLogin}) => {
                 <span>OR</span>
             </div>
 
-            <a href="http://localhost:3000/api/auth/google/" className='google-btn'>
+            <a href={`${API_URL}/auth/google/`} className='google-btn'>
                 <img src={google} alt="Google" />
                 Continue with google
             </a>

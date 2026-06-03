@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import './Header.css';
-import logo from '@/assets/LOGO-CRAYFISH.png';
+import logo from '@/assets/nav-logo.png';
 function Header(){
     return(
         <header className="header">
