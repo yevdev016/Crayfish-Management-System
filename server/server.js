@@ -36,15 +36,9 @@ app.use('/api/lifecycle', lifecycleRoutes);
 app.use('/api/activities', activityRoutes);
 app.use('/api/reports', reportRoutes);
 
-app.listen(port, () => {
-    console.log(`Server running on port: ${port}`);
-});
-
-if (process.env.NODE_ENV === 'production') {
-    const distPath = path.join(__dirname, '../client/dist');
-    app.use(express.static(distPath));
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(distPath, 'index.html'));
+if (!process.env.VERCEL) {
+    app.listen(port, () => {
+        console.log(`Server running on port: ${port}`);
     });
 }
 

@@ -1,6 +1,5 @@
 import pg from 'pg'
 import dotenv from 'dotenv'
-import dns from 'dns/promises'
 
 dotenv.config();
 
@@ -10,21 +9,8 @@ const poolConfig = {
 };
 
 if (process.env.DATABASE_URL) {
-    const url = new URL(process.env.DATABASE_URL);
-    poolConfig.user = decodeURIComponent(url.username);
-    poolConfig.password = decodeURIComponent(url.password);
-    poolConfig.host = url.hostname;
-    poolConfig.port = url.port;
-    poolConfig.database = url.pathname.slice(1);
+    poolConfig.connectionString = process.env.DATABASE_URL;
     poolConfig.ssl = { rejectUnauthorized: false };
-
-    try {
-        const [ipv4] = await dns.resolve4(poolConfig.host);
-        console.log(`Resolved ${poolConfig.host} -> ${ipv4}`);
-        poolConfig.host = ipv4;
-    } catch (err) {
-        console.error('IPv4 resolution failed:', err.message);
-    }
 } else {
     Object.assign(poolConfig, {
         user: process.env.PG_USER,
