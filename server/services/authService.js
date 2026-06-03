@@ -1,15 +1,36 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
+import crypto from 'crypto'
 import dotenv from 'dotenv'
-import { createUser, findUserById, findUserByGoogleId, findUserByEmail } from '../models/userModel.js'
+import db from '../configs/db.js'
+import { createUser, findUserById, findUserByGoogleId, findUserByEmail, storeOtp, clearOtp } from '../models/userModel.js'
 dotenv.config();
 
 export const createUserService = async (username, email, password, google_id = null) => {
     const saltRounds = 10;
-    const exististingUser = await findUserByEmail(email);
+    const existingUser = await findUserByEmail(email);
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-    if(exististingUser) throw new Error('User already exist');
+    if (existingUser) {
+        if (existingUser.is_verified) throw new Error('User already exist');
+        await clearOtp(email)
+        const query = `
+            UPDATE users SET username = $1, password = $2 WHERE email = $3 RETURNING id, email;
+        `;
+        const res = await db.query(query, [username, hashedPassword, email])
+        return res.rows[0]
+    }
     return await createUser(username, email, hashedPassword, google_id);
+}
+
+export const generateOtp = () => {
+    return crypto.randomInt(100000, 999999).toString();
+}
+
+export const storeOtpForUser = async (email) => {
+    const otp = generateOtp()
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000)
+    await storeOtp(email, otp, expiresAt)
+    return otp
 }
 
 export const generateJwt = (userId) => {

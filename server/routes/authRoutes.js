@@ -1,11 +1,11 @@
 import express from 'express';
-import { signUpController, signinController, googleCallback, signoutController } from '../controllers/authController.js';
+import { signUpController, signinController, googleCallback, signoutController, verifyOtpController, resendOtpController } from '../controllers/authController.js';
 import passport from 'passport';
 import rateLimit from 'express-rate-limit';
 import { generateJwt } from '../services/authService.js';
 import { setAuthCookie } from '../utils/cookieUtils.js';
 import { validate } from '../middleware/validate.js';
-import { signinSchema, signupSchema } from '../configs/validationSchemas.js';
+import { signinSchema, signupSchema, verifyOtpSchema, resendOtpSchema } from '../configs/validationSchemas.js';
 const router = express.Router();
 
 const authLimiter = rateLimit({
@@ -18,6 +18,8 @@ const authLimiter = rateLimit({
 
 router.post('/signin', authLimiter, validate(signinSchema), signinController);
 router.post('/signup', authLimiter, validate(signupSchema), signUpController);
+router.post('/verify-otp', authLimiter, validate(verifyOtpSchema), verifyOtpController);
+router.post('/resend-otp', authLimiter, validate(resendOtpSchema), resendOtpController);
 router.post('/signout', signoutController);
 router.get('/check-auth', passport.authenticate('jwt', {session: false}), (req, res) => {
     res.status(200).json({

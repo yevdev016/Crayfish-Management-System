@@ -62,7 +62,8 @@ passport.use(
                             profile.displayName, 
                             email, 
                             null, 
-                            googleId
+                            googleId,
+                            true
                         );
                     }
                 }

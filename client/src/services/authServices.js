@@ -36,6 +36,38 @@ export const signin = async (userData) => {
         }
     }
 }
+export const verifyOtp = async (email, otp) => {
+    try {
+        const response = await axios.post(`${API_URL}/auth/verify-otp`, { email, otp }, {
+            withCredentials: true
+        });
+        return response;
+    } catch (err) {
+        if (err.response) {
+            throw new Error(err.response.data.message || 'OTP verification failed');
+        } else if (err.request) {
+            throw new Error('Network error. Please check your connection.');
+        } else {
+            throw new Error('An unexpected error occurred.');
+        }
+    }
+}
+
+export const resendOtp = async (email) => {
+    try {
+        const response = await axios.post(`${API_URL}/auth/resend-otp`, { email }, {
+            withCredentials: true
+        });
+        return response;
+    } catch (err) {
+        if (err.response) {
+            throw new Error(err.response.data.message || 'Failed to resend OTP');
+        } else {
+            throw new Error('An unexpected error occurred.');
+        }
+    }
+}
+
 export const signout = async () => {
     try {
         const response = await axios.post(`${API_URL}/auth/signout`,{}, {

@@ -8,6 +8,9 @@ const initDatabase = async () => {
             email VARCHAR(250) UNIQUE NOT NULL,
             password TEXT,
             google_id TEXT,
+            is_verified BOOLEAN DEFAULT FALSE,
+            otp VARCHAR(6),
+            otp_expires_at TIMESTAMP,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
     `;
